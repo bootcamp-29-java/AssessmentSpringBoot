@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form method="POST" th:action="@{/addbatchclass}">
+            <input type="text" id="id" name="id" th:value="${id}" readonly="true">
+            <select id="class1" name="class1">
+                <option th:each="as : ${classes}" th:value="${as.id}" th:text="${as.name}"></option>
+            </select> 
+            <select name="trainer" id="trainer">
+                <option th:each="as : ${trainers}" th:value="${as.id}" th:text="${as.firstName + ' ' + as.lastName}"></option>
+            </select> 
+            <input type="submit" value="Submit">
+        </form>
+    </body>
+</html>
