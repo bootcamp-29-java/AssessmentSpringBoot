@@ -93,7 +93,7 @@ public class AssessmentController {
     public String addBatchClass2(Model model, @ModelAttribute("id") String id, @RequestParam("class2") List<String> class2, @ModelAttribute("trainer") String trainer) {
         ibs.save(new Batch(id));
         for (String string : class2) {
-            ibcs.save(new BatchClass(id + "/" + string, ibs.getById(id), ics.getById(string), ies.getById(trainer)));
+            ibcs.save(new BatchClass(ibs.getById(id), ics.getById(string), ies.getById(trainer)));
         }
         return "redirect:/addbatchclass";
     }
@@ -130,7 +130,7 @@ public class AssessmentController {
             if (!nilai.get(i).equals("")) {
                 Assessment assessment = null;
                 for (Assessment assessment1 : ias.getAll()) {
-                    if (assessment1.getParticipant().getId().equals(id.get(i))) {
+                    if (assessment1.getParticipant().getId().equals(id.get(i)) && assessment1.getSylabus().getId().equals(ilcs.getById(criteria).getSylabus().getId()) ) {
                         assessment = assessment1;
                     }
                 }

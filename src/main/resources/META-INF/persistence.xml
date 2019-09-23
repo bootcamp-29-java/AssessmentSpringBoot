@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="com.bootcamp_cobaspringboot_jar_0.0.1-SNAPSHOTPU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.bootcamp.cobaspringapplication.entities.Sylabus</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Assessment</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Employee</class>
+    <class>com.bootcamp.cobaspringapplication.entities.AssessmentDetail</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Role</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Account</class>
+    <class>com.bootcamp.cobaspringapplication.entities.EmployeeRole</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Criteria</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Batch</class>
+    <class>com.bootcamp.cobaspringapplication.entities.LessonCriteria</class>
+    <class>com.bootcamp.cobaspringapplication.entities.BatchClass</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Lesson</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Classes</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Status</class>
+    <class>com.bootcamp.cobaspringapplication.entities.Participant</class>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/db_assessment?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="root"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value=""/>
+    </properties>
+  </persistence-unit>
+</persistence>

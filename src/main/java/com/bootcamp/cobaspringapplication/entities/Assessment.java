@@ -38,8 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Assessment.findAll", query = "SELECT a FROM Assessment a")
     , @NamedQuery(name = "Assessment.findById", query = "SELECT a FROM Assessment a WHERE a.id = :id")
     , @NamedQuery(name = "Assessment.findByDate", query = "SELECT a FROM Assessment a WHERE a.date = :date")
-    , @NamedQuery(name = "Assessment.findByScore", query = "SELECT a FROM Assessment a WHERE a.score = :score")
-    , @NamedQuery(name = "Assessment.findBySylabus", query = "SELECT a FROM Assessment a WHERE a.sylabus = :sylabus")})
+    , @NamedQuery(name = "Assessment.findByScore", query = "SELECT a FROM Assessment a WHERE a.score = :score")})
 public class Assessment implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -58,14 +57,12 @@ public class Assessment implements Serializable {
     @NotNull
     @Column(name = "score")
     private float score;
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 11)
-    @Column(name = "sylabus")
-    private String sylabus;
     @JoinColumn(name = "participant", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Participant participant;
+    @JoinColumn(name = "sylabus", referencedColumnName = "id")
+    @ManyToOne(optional = false, fetch = FetchType.LAZY)
+    private Sylabus sylabus;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "assessment", fetch = FetchType.LAZY)
     private List<AssessmentDetail> assessmentDetailList;
 
@@ -76,11 +73,10 @@ public class Assessment implements Serializable {
         this.id = id;
     }
 
-    public Assessment(String id, Date date, float score, String sylabus) {
+    public Assessment(String id, Date date, float score) {
         this.id = id;
         this.date = date;
         this.score = score;
-        this.sylabus = sylabus;
     }
 
     public String getId() {
@@ -107,20 +103,20 @@ public class Assessment implements Serializable {
         this.score = score;
     }
 
-    public String getSylabus() {
-        return sylabus;
-    }
-
-    public void setSylabus(String sylabus) {
-        this.sylabus = sylabus;
-    }
-
     public Participant getParticipant() {
         return participant;
     }
 
     public void setParticipant(Participant participant) {
         this.participant = participant;
+    }
+
+    public Sylabus getSylabus() {
+        return sylabus;
+    }
+
+    public void setSylabus(Sylabus sylabus) {
+        this.sylabus = sylabus;
     }
 
     @XmlTransient

@@ -48,6 +48,8 @@ public class Sylabus implements Serializable {
     @NotNull
     @Column(name = "percentage")
     private float percentage;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sylabus", fetch = FetchType.LAZY)
+    private List<Assessment> assessmentList;
     @JoinColumn(name = "lesson", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Lesson lesson;
@@ -83,6 +85,15 @@ public class Sylabus implements Serializable {
 
     public void setPercentage(float percentage) {
         this.percentage = percentage;
+    }
+
+    @XmlTransient
+    public List<Assessment> getAssessmentList() {
+        return assessmentList;
+    }
+
+    public void setAssessmentList(List<Assessment> assessmentList) {
+        this.assessmentList = assessmentList;
     }
 
     public Lesson getLesson() {
