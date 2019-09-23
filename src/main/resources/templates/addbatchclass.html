@@ -13,9 +13,7 @@ and open the template in the editor.
     <body>
         <form method="POST" th:action="@{/addbatchclass}">
             <input type="text" id="id" name="id" th:value="${id}" readonly="true">
-            <select id="class1" name="class1">
-                <option th:each="as : ${classes}" th:value="${as.id}" th:text="${as.name}"></option>
-            </select> 
+            <input th:each="as : ${classes}" type="checkbox" name="class2" id="class2" th:value="${as.id}" th:text="${as.name}">
             <select name="trainer" id="trainer">
                 <option th:each="as : ${trainers}" th:value="${as.id}" th:text="${as.firstName + ' ' + as.lastName}"></option>
             </select> 

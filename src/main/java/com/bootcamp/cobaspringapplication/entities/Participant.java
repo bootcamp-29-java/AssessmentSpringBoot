@@ -68,6 +68,11 @@ public class Participant implements Serializable {
         this.id = id;
     }
 
+    public Participant(String id, BatchClass batchClass) {
+        this.id = id;
+        this.batchClass = batchClass;
+    }
+
     public String getId() {
         return id;
     }
@@ -141,5 +146,5 @@ public class Participant implements Serializable {
     public String toString() {
         return "com.bootcamp.cobaspringapplication.entities.Participant[ id=" + id + " ]";
     }
-    
+
 }

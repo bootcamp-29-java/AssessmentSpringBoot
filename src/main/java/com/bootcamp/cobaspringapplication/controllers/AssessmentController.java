@@ -9,6 +9,7 @@ import com.bootcamp.cobaspringapplication.entities.Batch;
 import com.bootcamp.cobaspringapplication.entities.BatchClass;
 import com.bootcamp.cobaspringapplication.entities.Employee;
 import com.bootcamp.cobaspringapplication.entities.EmployeeRole;
+import com.bootcamp.cobaspringapplication.entities.Participant;
 import com.bootcamp.cobaspringapplication.services.IBatchClassService;
 import com.bootcamp.cobaspringapplication.services.IBatchService;
 import com.bootcamp.cobaspringapplication.services.ISylabusService;
@@ -53,7 +54,7 @@ public class AssessmentController {
         model.addAttribute("batchClasses", ibcs.getAll());
         return "showbatchclass";
     }
-    
+
     @GetMapping("/addbatchclass")
     public String addBatchClass(Model model) {
         model.addAttribute("id", ibs.genId());
@@ -67,13 +68,35 @@ public class AssessmentController {
         model.addAttribute("trainers", trainers);
         return "addbatchclass";
     }
-    
+
     @PostMapping("/addbatchclass")
-    public String addBatchClass2(Model model, @ModelAttribute("id") String id, @ModelAttribute("class1") String class1, @ModelAttribute("trainer") String trainer  ) {
-        System.out.println(id + " " + class1 + " " + trainer);
+    public String addBatchClass2(Model model, @ModelAttribute("id") String id, @RequestParam("class2") List<String> class2, @ModelAttribute("trainer") String trainer) {
         ibs.save(new Batch(id));
-        ibcs.save(new BatchClass(id+"/"+class1, ibs.getById(id), ics.getById(class1), ies.getById(trainer)));
+        for (String string : class2) {
+            ibcs.save(new BatchClass(id + "/" + string, ibs.getById(id), ics.getById(string), ies.getById(trainer)));
+        }
         return "redirect:/addbatchclass";
+    }
+    
+    @GetMapping("/addparticipant")
+    public String addParticipant(Model model) {
+        model.addAttribute("batchClasses", ibcs.getAll());
+        List<Employee> participants = new ArrayList<>();
+        for (EmployeeRole employeeRole : iers.getAll()) {
+            if (employeeRole.getRole().getName().equals("Participant") && employeeRole.getEmployee().getParticipant() == null) {
+                participants.add(employeeRole.getEmployee());
+            }
+        }
+        model.addAttribute("participants", participants);
+        return "addparticipant";
+    }
+
+    @PostMapping("/addparticipant")
+    public String addParticipant2(Model model, @ModelAttribute("batchClass") String batchClass, @RequestParam("participants") List<String> participants) {
+        for (String participant : participants) {
+            ips.save(new Participant(participant, ibcs.getById(batchClass)));
+        }
+        return "redirect:/addparticipant";
     }
 
 }
