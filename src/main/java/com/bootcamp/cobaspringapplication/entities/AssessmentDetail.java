@@ -65,6 +65,13 @@ public class AssessmentDetail implements Serializable {
         this.id = id;
     }
 
+    public AssessmentDetail(Float score, LessonCriteria lessonCriteria, Assessment assessment) {
+        this.id = lessonCriteria.getId() + "/" + assessment.getId();
+        this.score = score;
+        this.lessonCriteria = lessonCriteria;
+        this.assessment = assessment;
+    }
+
     public Float getScore() {
         return score;
     }

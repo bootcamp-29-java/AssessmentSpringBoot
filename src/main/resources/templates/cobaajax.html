@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+
+    <head>
+        <title>Index</title>
+    </head>
+
+    <body>
+        <form method="POST" th:action="@{/inputnilai}">
+            <select name="batchClass" id="batchClass">
+                <option th:each="as : ${batchClasses}" th:value="${as.id}" th:text="${as.batch.id + ' ' + as.class1.name}"></option>
+            </select> 
+            <div id="form">
+                Content goes here
+            </div>
+            <input type="submit" value="Submit">
+            <!-- JQury from Google CDN -->
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+            <script>
+                $(document).ready(function () {
+
+                    //call function when page is loaded
+                    getForm();
+
+                    //set on change listener
+                    $('#batchClass').change(getForm);
+
+                    function getForm() {
+
+                        //create url to request fragment
+                        var url1 = '/loadform?id=' + $('#batchClass').val();
+
+                        //load fragment and replace content
+                        $('#form').load(url1);
+                    }
+                })
+            </script>
+        </form>
+    </body>
+</html>

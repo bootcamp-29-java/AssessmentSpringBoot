@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head>
+    </head>
+
+    <body>
+        <div th:fragment="form">
+            <select name="sylabus" id="sylabus">
+                <option th:each="as : ${sylabuses}" th:value="${as.id}" th:text="${as.lesson.name}"></option>
+            </select>
+            <div id="criterias">
+                Content goes here
+            </div>
+            <script>
+                $(document).ready(function () {
+
+                    //call function when page is loaded
+                    getForm();
+
+                    //set on change listener
+                    $('#sylabus').change(getForm);
+
+                    function getForm() {
+
+                        //create url to request fragment
+                        var url1 = '/loadcriterias?id=' + $('#sylabus').val();
+
+                        //load fragment and replace content
+                        $('#criterias').load(url1);
+                    }
+                })
+            </script> 
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Name</th>
+                        <th>Score</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="as : ${participants}">
+                        <td th:text="${as.id}"></td>
+                        <td th:text="${as.employee.firstName + ' ' + as.employee.lastName}"></td>
+                        <td><input type="text" th:name="nilai"></td>
+                        <td><input type="hidden" th:name="id" th:value="${as.id}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div th:fragment="criterias2">
+            <select name="criteria" id="criteria">
+                <option th:each="as : ${criterias}" th:value="${as.id}" th:text="${as.criteria.name}"></option>
+            </select>
+        </div>
+    </body>
+</html>
