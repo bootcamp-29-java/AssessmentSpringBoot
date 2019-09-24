@@ -24,6 +24,8 @@ import com.bootcamp.cobaspringapplication.services.ISylabusService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -63,8 +65,9 @@ public class BatchClassController {
     @Autowired
     IAssessmentDetailService iads;
 
-    @GetMapping("/managebatchclass")
+    @GetMapping("/adminpage/managebatchclass")
     public String manageBatchClass(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("batchClasses", ibcs.getAll());
         model.addAttribute("id", ibs.genId());
         model.addAttribute("classes", ics.getAll());
@@ -75,7 +78,7 @@ public class BatchClassController {
             }
         }
         model.addAttribute("trainers", trainers);
-        return "managebatchclass";
+        return "/adminpage/managebatchclass";
     }
 
     @PostMapping("/addbatchclass")
@@ -84,12 +87,12 @@ public class BatchClassController {
         for (String string : class2) {
             ibcs.save(new BatchClass(ibs.getById(id), ics.getById(string), ies.getById(trainer)));
         }
-        return "redirect:/managebatchclass";
+        return "redirect:/adminpage/managebatchclass";
     }
 
     @GetMapping("deleteBatchClass")
     public String deleteBatchClass(String id) {
         ibcs.delete(id);
-        return "redirect:/managebatchclass";
+        return "redirect:/adminpage/managebatchclass";
     }
 }

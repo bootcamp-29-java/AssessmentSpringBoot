@@ -76,7 +76,7 @@ and open the template in the editor.
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" th:action="@{/addlesson}">
+                        <form method="POST" th:action="@{/addclasses}">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>ID :</label>
@@ -102,12 +102,12 @@ and open the template in the editor.
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading">Start Bootstrap </div>
                 <div class="list-group list-group-flush">
-                    <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
-                    <a href="/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
-                    <a href="/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
-                    <a href="/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
-                    <a href="/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
+                    <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                    <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
+                    <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
+                    <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -128,7 +128,7 @@ and open the template in the editor.
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link" href="#">Logout</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -148,7 +148,7 @@ and open the template in the editor.
                 <div class="container">
 
                     <diV class="text-center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Lesson</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Class</button>
                     </diV>
                     <br>
                     <table class="table table-hover" id="asd">
@@ -161,7 +161,7 @@ and open the template in the editor.
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:index=1 th:each="as : ${lessons}">
+                            <tr th:index=1 th:each="as : ${classes}">
                                 <td></td>
                                 <td th:text="${as.id}"></td>
                                 <td th:text="${as.name}"></td>
@@ -227,6 +227,6 @@ and open the template in the editor.
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-        <script src="js/test.js"></script>
+        <script src="../js/test.js"></script>
     </body>
 </html>

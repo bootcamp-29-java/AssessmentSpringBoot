@@ -69,20 +69,20 @@ public class AssessmentController {
     @Autowired
     IAssessmentDetailService iads;
     
-    @RequestMapping("/adminHome")
+    @RequestMapping("/adminpage/adminhome")
     public String home(){
         return "/adminpage/adminhome";
     }
     
-    @RequestMapping("/trainerHome")
+    @RequestMapping("/trainerpage/trainerhome")
     public String home2(){
         return "/trainerpage/trainerhome";
     }
 
-    @GetMapping("/inputnilai")
+    @GetMapping("/trainerpage/inputnilai")
     public String inputNilai(Model model) {
         model.addAttribute("batchClasses", ibcs.getAll());
-        return "inputnilai";
+        return "/trainerpage/inputnilai";
     }
     @PostMapping("/inputnilai")
     public String inputNilai(@RequestParam("nilai") List<String> nilai, @ModelAttribute("criteria") String criteria, @RequestParam("id") List<String> id) {
@@ -97,7 +97,7 @@ public class AssessmentController {
                 iads.save(new AssessmentDetail(Float.parseFloat(nilai.get(i)), ilcs.getById(criteria), assessment));
             }
         }
-        return "redirect:/inputnilai";
+        return "redirect:/trainerpage/inputnilai";
     }
 
     @GetMapping("/loadform")

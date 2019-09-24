@@ -69,8 +69,8 @@ and open the template in the editor.
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading">Start Bootstrap </div>
                 <div class="list-group list-group-flush">
-                    <a href="/2" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="/inputnilai" class="list-group-item list-group-item-action bg-light">Input Nilai</a>
+                    <a href="/trainerpage/trainerhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    <a href="/trainerpage/inputnilai" class="list-group-item list-group-item-action bg-light">Input Nilai</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -91,7 +91,7 @@ and open the template in the editor.
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link" href="#">Logout</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

@@ -27,6 +27,8 @@ import com.bootcamp.cobaspringapplication.services.ISylabusService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,16 +69,17 @@ public class ClassesController {
     @Autowired
     IAssessmentDetailService iads;
 
-    @RequestMapping("/manageclasses")
+    @RequestMapping("/adminpage/manageclasses")
     public String manageClasses(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("classes", ics.getAll());
-        return "manageclasses";
+        return "/adminpage/manageclasses";
     }
 
     @PostMapping("/addclasses")
     public String addClasses(Model model, @ModelAttribute("id") String id, @ModelAttribute("name") String name) {
         ics.save(new Classes(id, name));
-        return "redirect:/manageclasses";
+        return "redirect:/adminpage/manageclasses";
     }
 
 }

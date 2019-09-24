@@ -19,6 +19,8 @@ import com.bootcamp.cobaspringapplication.services.ILessonService;
 import com.bootcamp.cobaspringapplication.services.IParticipantService;
 import com.bootcamp.cobaspringapplication.services.ISylabusService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -60,12 +62,13 @@ public class CriteriaController {
     @PostMapping("/addcriteria")
     public String addCriteria(Model model, @ModelAttribute("id") String id, @ModelAttribute("name") String name) {
         ics2.save(new Criteria(id, name));
-        return "redirect:/managecriteria";
+        return "redirect:/adminpage/managecriteria";
     }
 
-    @RequestMapping("/managecriteria")
+    @RequestMapping("/adminpage/managecriteria")
     public String manageCriteria(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("criterias", ics2.getAll());
-        return "managecriteria";
+        return "/adminpage/managecriteria";
     }
 }

@@ -43,10 +43,10 @@ public class Login {
     public String home(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if(auth.getAuthorities().toString().contains("Admin")){
-            return "redirect:/adminHome";
+            return "redirect:/adminpage/adminhome";
         }
         else if(auth.getAuthorities().toString().contains("Trainer")){
-            return "redirect:/trainerHome";
+            return "redirect:/trainerpage/trainerhome";
         }
         System.out.println(auth.getAuthorities().toString());
         return "login";

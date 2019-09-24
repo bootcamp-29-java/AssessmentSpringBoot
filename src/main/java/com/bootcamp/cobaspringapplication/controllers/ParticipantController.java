@@ -25,6 +25,8 @@ import com.bootcamp.cobaspringapplication.services.ISylabusService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -67,6 +69,7 @@ public class ParticipantController {
 
     @RequestMapping("/manageparticipant")
     public String manageParticipant(Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("batchClasses", ibcs.getAll());
         List<Employee> participants = new ArrayList<>();
         for (EmployeeRole employeeRole : iers.getAll()) {
@@ -75,7 +78,7 @@ public class ParticipantController {
             }
         }
         model.addAttribute("participants", participants);
-        return "manageparticipant";
+        return "/adminpage/manageparticipant";
     }
 
     @PostMapping("/addparticipant")
@@ -83,6 +86,6 @@ public class ParticipantController {
         for (String participant : participants) {
             ips.save(new Participant(participant, ibcs.getById(batchClass)));
         }
-        return "redirect:/manageparticipant";
+        return "redirect:/adminpage/manageparticipant";
     }
 }
