@@ -5,13 +5,15 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-    <head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
         <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
         <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
         <style type="text/css"> 
             body {
                 overflow-x: hidden;
@@ -57,6 +59,7 @@ and open the template in the editor.
                 }
             }
         </style>
+
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -73,21 +76,15 @@ and open the template in the editor.
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" th:action="@{/addparticipant}">
+                        <form method="POST" th:action="@{/addcriteria}">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
-                                    <label>Batch Class :</label>
-                                    <select name="batchClass" id="batchClass"  class="form-control">
-                                        <option th:each="as : ${batchClasses}" th:value="${as.id}" th:text="${as.batch.id + ' ' + as.class1.name}"></option>
-                                    </select>
+                                    <label>ID :</label>
+                                    <input class="form-control" type="text" id="id" name="id" th:value="${id}">
                                 </div>
-
                                 <div class="form-group col-md-12">
-                                    <label>Participant   : </label>
-                                    <div th:each="as : ${participants}" class="checkbox">
-
-                                        <label><input type="checkbox" name="participants" id="participants" th:value="${as.id}" th:text="${' ' + as.firstName + ' ' + as.lastName}"></label>
-                                    </div>
+                                    <label>Name :</label>
+                                    <input class="form-control" type="text" id="name" name="name" th:value="${id}">
                                 </div>
                                 <div class="form-group col-md-12">
                                     <input class="btn btn-success" type="submit" value="Submit">
@@ -119,7 +116,7 @@ and open the template in the editor.
             <div id="page-content-wrapper">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                    <button class="btn btn-primary" id="menu-toggle">Sidebar</button>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -151,7 +148,7 @@ and open the template in the editor.
                 <div class="container">
 
                     <diV class="text-center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Participant to Class</button>
+                        <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Criteria</button>
                     </diV>
                     <br>
                     <table class="table table-hover" id="asd">
@@ -164,10 +161,10 @@ and open the template in the editor.
                             </tr>
                         </thead>
                         <tbody>
-                            <tr th:index=1 th:each="as : ${participants}">
+                            <tr th:index=1 th:each="as : ${criterias}">
                                 <td></td>
                                 <td th:text="${as.id}"></td>
-                                <td th:text="${as.firstName + ' ' + as.lastName}"></td>
+                                <td th:text="${as.name}"></td>
                                 <td></td>
                             </tr>
                         </tbody>

@@ -13,6 +13,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        
         <style type="text/css"> 
             body {
                 overflow-x: hidden;
@@ -76,12 +77,27 @@ and open the template in the editor.
                     </div>
                     <div class="modal-body">
                         <form method="POST" th:action="@{/addbatchclass}">
-                            <input type="text" id="id" name="id" th:value="${id}"><br>
-                            <input th:each="as : ${classes}" type="checkbox" name="class2" id="class2" th:value="${as.id}" th:text="${as.name}"><br>
-                            <select name="trainer" id="trainer">
-                                <option th:each="as : ${trainers}" th:value="${as.id}" th:text="${as.firstName + ' ' + as.lastName}"></option>
-                            </select> <br>
-                            <input type="submit" value="Submit">
+                            <div class="form-row">
+                                <div class="form-group col-md-12">
+                                    <label>ID :</label>
+                                    <input class="form-control" type="text" id="id" name="id" th:value="${id}">
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Class : </label>
+                                    <div th:each="as : ${classes}" class="checkbox">
+                                        <label><input name="class2" id="class2" type="checkbox" th:value="${as.id}" th:text="' ' + ${as.name}"></label>
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <label>Trainer :</label>
+                                    <select name="trainer" id="trainer" class="form-control">
+                                        <option th:each="as : ${trainers}" th:value="${as.id}" th:text="${as.firstName + ' ' + as.lastName}"></option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    <input class="btn btn-success" type="submit" value="Submit">
+                                </div>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -96,7 +112,10 @@ and open the template in the editor.
                 <div class="list-group list-group-flush">
                     <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                     <a href="/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
-                    <a href="/manageparticipant" class="list-group-item list-group-item-action bg-light">Manage Non-Participant</a>
+                    <a href="/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                    <a href="/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
+                    <a href="/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
+                    <a href="/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -105,7 +124,7 @@ and open the template in the editor.
             <div id="page-content-wrapper">
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-                    <button class="btn btn-primary" id="menu-toggle">Toggle Menu</button>
+                    <button class="btn btn-primary" id="menu-toggle">Sidebar</button>
 
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
@@ -139,6 +158,7 @@ and open the template in the editor.
                     <diV class="text-center">
                         <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Batch Class</button>
                     </diV>
+                    <br>
                     <table class="table table-hover" id="asd">
                         <thead>
                             <tr>

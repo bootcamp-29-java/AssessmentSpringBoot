@@ -71,63 +71,12 @@ public class AssessmentController {
     
     @RequestMapping("/adminHome")
     public String home(){
-        return "adminhome";
+        return "/adminpage/adminhome";
     }
     
     @RequestMapping("/trainerHome")
     public String home2(){
-        return "trainerhome";
-    }
-
-    @GetMapping("/managebatchclass")
-    public String manageBatchClass(Model model) {
-        model.addAttribute("batchClasses", ibcs.getAll());
-        model.addAttribute("id", ibs.genId());
-        model.addAttribute("classes", ics.getAll());
-        List<Employee> trainers = new ArrayList<>();
-        for (EmployeeRole employeeRole : iers.getAll()) {
-            if (employeeRole.getRole().getName().equals("Trainer")) {
-                trainers.add(employeeRole.getEmployee());
-            }
-        }
-        model.addAttribute("trainers", trainers);
-        return "managebatchclass";
-    }
-
-    @PostMapping("/addbatchclass")
-    public String addBatchClass(Model model, @ModelAttribute("id") String id, @RequestParam("class2") List<String> class2, @ModelAttribute("trainer") String trainer) {
-        ibs.save(new Batch(id));
-        for (String string : class2) {
-            ibcs.save(new BatchClass(ibs.getById(id), ics.getById(string), ies.getById(trainer)));
-        }
-        return "redirect:/managebatchclass";
-    }
-    
-    @GetMapping("deleteBatchClass")
-    public String deleteBatchClass(String id){
-        ibcs.delete(id);
-        return "redirect:/managebatchclass";
-    }
-    
-    @RequestMapping("/manageparticipant")
-    public String manageParticipant(Model model) {
-        model.addAttribute("batchClasses", ibcs.getAll());
-        List<Employee> participants = new ArrayList<>();
-        for (EmployeeRole employeeRole : iers.getAll()) {
-            if (employeeRole.getRole().getName().equals("Participant") && employeeRole.getEmployee().getParticipant() == null) {
-                participants.add(employeeRole.getEmployee());
-            }
-        }
-        model.addAttribute("participants", participants);
-        return "manageparticipant";
-    }
-
-    @PostMapping("/addparticipant")
-    public String addParticipant(Model model, @ModelAttribute("batchClass") String batchClass, @RequestParam("participants") List<String> participants) {
-        for (String participant : participants) {
-            ips.save(new Participant(participant, ibcs.getById(batchClass)));
-        }
-        return "redirect:/manageparticipant";
+        return "/trainerpage/trainerhome";
     }
 
     @GetMapping("/inputnilai")

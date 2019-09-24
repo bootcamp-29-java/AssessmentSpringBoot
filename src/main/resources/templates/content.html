@@ -1,58 +1,131 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:th="http://www.thymeleaf.org">
-    <head>
-    </head>
+    <head><link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+            <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+            <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+            <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+            <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-    <body>
-        <div th:fragment="form">
-            <select name="sylabus" id="sylabus">
-                <option th:each="as : ${sylabuses}" th:value="${as.id}" th:text="${as.lesson.name}"></option>
-            </select>
-            <div id="criterias">
-                Content goes here
-            </div>
-            <script>
-                $(document).ready(function () {
-
-                    //call function when page is loaded
-                    getForm();
-
-                    //set on change listener
-                    $('#sylabus').change(getForm);
-
-                    function getForm() {
-
-                        //create url to request fragment
-                        var url1 = '/loadcriterias?id=' + $('#sylabus').val();
-
-                        //load fragment and replace content
-                        $('#criterias').load(url1);
+                <style type="text/css"> 
+                    body {
+                        overflow-x: hidden;
                     }
-                })
-            </script> 
-            <table id="part">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr th:each="as : ${participants}">
-                        <td th:text="${as.id}"></td>
-                        <td th:text="${as.employee.firstName + ' ' + as.employee.lastName}"></td>
-                        <td><input type="text" th:name="nilai"></td>
-                        <td><input type="hidden" th:name="id" th:value="${as.id}"></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <div th:fragment="criterias2">
-            <select name="criteria" id="criteria">
-                <option th:each="as : ${criterias}" th:value="${as.id}" th:text="${as.criteria.name}"></option>
-            </select>
-        </div>
-    </body>
-</html>
+                    #sidebar-wrapper {
+                        min-height: 100vh;
+                        margin-left: -15rem;
+                        -webkit-transition: margin .25s ease-out;
+                        -moz-transition: margin .25s ease-out;
+                        -o-transition: margin .25s ease-out;
+                        transition: margin .25s ease-out;
+                    }
+
+                    #sidebar-wrapper .sidebar-heading {
+                        padding: 0.875rem 1.25rem;
+                        font-size: 1.2rem;
+                    }
+
+                    #sidebar-wrapper .list-group {
+                        width: 15rem;
+                    }
+
+                    #page-content-wrapper {
+                        min-width: 100vw;
+                    }
+
+                    #wrapper.toggled #sidebar-wrapper {
+                        margin-left: 0;
+                    }
+
+                    @media (min-width: 768px) {
+                        #sidebar-wrapper {
+                            margin-left: 0;
+                        }
+
+                        #page-content-wrapper {
+                            min-width: 0;
+                            width: 100%;
+                        }
+
+                        #wrapper.toggled #sidebar-wrapper {
+                            margin-left: -15rem;
+                        }
+                    }
+                </style>
+                </head>
+
+                <body>
+                    <div th:fragment="form">
+                        <select name="sylabus" id="sylabus">
+                            <option th:each="as : ${sylabuses}" th:value="${as.id}" th:text="${as.lesson.name}"></option>
+                        </select>
+                        <div id="criterias">
+                            Content goes here
+                        </div>
+                        <script>
+                            $(document).ready(function () {
+
+                                //call function when page is loaded
+                                getForm();
+
+                                //set on change listener
+                                $('#sylabus').change(getForm);
+
+                                function getForm() {
+
+                                    //create url to request fragment
+                                    var url1 = '/loadcriterias?id=' + $('#sylabus').val();
+
+                                    //load fragment and replace content
+                                    $('#criterias').load(url1);
+                                }
+                            })
+                        </script> 
+                        <table id="asd">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Score</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="as : ${participants}">
+                                    <td th:text="${as.id}"></td>
+                                    <td th:text="${as.employee.firstName + ' ' + as.employee.lastName}"></td>
+                                    <td><input type="text" th:name="nilai"></td>
+                                    <td><input type="hidden" th:name="id" th:value="${as.id}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:fragment="participantss">
+                        <table id="asd">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="as : ${participants}">
+                                    <td th:text="${as.id}"></td>
+                                    <td th:text="${as.employee.firstName + ' ' + as.employee.lastName}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div th:fragment="criterias2">
+                        <select name="criteria" id="criteria">
+                            <option th:each="as : ${criterias}" th:value="${as.id}" th:text="${as.criteria.name}"></option>
+                        </select>
+                    </div>
+                    <script src="vendor/jquery/jquery.min.js"></script>
+                    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+                    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+                    <script src="js/test.js"></script>
+                </body>
+                </html>

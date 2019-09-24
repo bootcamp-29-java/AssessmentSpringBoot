@@ -62,42 +62,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <!-- Modal -->
-        <div class="modal fade" id="addBatchClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" th:action="@{/addparticipant}">
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>Batch Class :</label>
-                                    <select name="batchClass" id="batchClass"  class="form-control">
-                                        <option th:each="as : ${batchClasses}" th:value="${as.id}" th:text="${as.batch.id + ' ' + as.class1.name}"></option>
-                                    </select>
-                                </div>
 
-                                <div class="form-group col-md-12">
-                                    <label>Participant   : </label>
-                                    <div th:each="as : ${participants}" class="checkbox">
-
-                                        <label><input type="checkbox" name="participants" id="participants" th:value="${as.id}" th:text="${' ' + as.firstName + ' ' + as.lastName}"></label>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <input class="btn btn-success" type="submit" value="Submit">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
         <div class="d-flex toggled" id="wrapper">
 
@@ -105,12 +70,8 @@ and open the template in the editor.
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading">Start Bootstrap </div>
                 <div class="list-group list-group-flush">
-                    <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
-                    <a href="/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
-                    <a href="/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
-                    <a href="/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
-                    <a href="/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/2" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    <a href="/inputnilai" class="list-group-item list-group-item-action bg-light">Input Nilai</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -149,29 +110,35 @@ and open the template in the editor.
                 </nav>
                 <br>
                 <div class="container">
+                    <select name="batchClass" id="batchClass">
+                        <option th:each="as : ${batchClasses}" th:value="${as.id}" th:text="${as.batch.id + ' ' + as.class1.name}"></option>
+                    </select> 
+                    <div id="participantss">
+                        Content goes here
+                    </div>
+                    <input type="submit" value="Submit">
+                    <!-- JQury from Google CDN -->
+                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 
-                    <diV class="text-center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Participant to Class</button>
-                    </diV>
-                    <br>
-                    <table class="table table-hover" id="asd">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:index=1 th:each="as : ${participants}">
-                                <td></td>
-                                <td th:text="${as.id}"></td>
-                                <td th:text="${as.firstName + ' ' + as.lastName}"></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <script>
+                        $(document).ready(function () {
+
+                            //call function when page is loaded
+                            getForm();
+
+                            //set on change listener
+                            $('#batchClass').change(getForm);
+
+                            function getForm() {
+
+                                //create url to request fragment
+                                var url1 = '/loadparticipants?id=' + $('#batchClass').val();
+
+                                //load fragment and replace content
+                                $('#participantss').load(url1);
+                            }
+                        })
+                    </script>
                     <!-- /#page-content-wrapper -->
                     <!-- Footer -->
                     <footer class="page-footer font-small cyan darken-3">

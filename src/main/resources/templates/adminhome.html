@@ -71,7 +71,10 @@ and open the template in the editor.
                 <div class="list-group list-group-flush">
                     <a href="/" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                     <a href="/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
-                    <a href="/manageparticipant" class="list-group-item list-group-item-action bg-light">Manage Non-Participant</a>
+                    <a href="/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                    <a href="/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
+                    <a href="/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
+                    <a href="/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -92,7 +95,7 @@ and open the template in the editor.
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a sec:authorize="isAuthenticated()" class="nav-link" href="#" th:href="@{/logout}">Logout</a>
+                                <a class="nav-link" href="#">Link</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
