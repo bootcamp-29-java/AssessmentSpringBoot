@@ -6,6 +6,7 @@
 package com.bootcamp.cobaspringapplication.entities;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,6 +17,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -30,6 +33,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "AssessmentDetail.findAll", query = "SELECT a FROM AssessmentDetail a")
     , @NamedQuery(name = "AssessmentDetail.findById", query = "SELECT a FROM AssessmentDetail a WHERE a.id = :id")
+    , @NamedQuery(name = "AssessmentDetail.findByDate", query = "SELECT a FROM AssessmentDetail a WHERE a.date = :date")
     , @NamedQuery(name = "AssessmentDetail.findByScore", query = "SELECT a FROM AssessmentDetail a WHERE a.score = :score")})
 public class AssessmentDetail implements Serializable {
 
@@ -40,6 +44,9 @@ public class AssessmentDetail implements Serializable {
     @Size(min = 1, max = 11)
     @Column(name = "id")
     private String id;
+    @Column(name = "date")
+    @Temporal(TemporalType.DATE)
+    private Date date;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "score")
     private Float score;
@@ -70,6 +77,14 @@ public class AssessmentDetail implements Serializable {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Float getScore() {
@@ -120,5 +135,5 @@ public class AssessmentDetail implements Serializable {
     public String toString() {
         return "com.bootcamp.cobaspringapplication.entities.AssessmentDetail[ id=" + id + " ]";
     }
-    
+
 }

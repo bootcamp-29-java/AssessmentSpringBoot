@@ -62,6 +62,13 @@ public class BatchClass implements Serializable {
         this.id = id;
     }
 
+    public BatchClass(Batch batch, Classes class1, Employee trainer) {
+        this.id = batch.getId() + "/" + class1.getId();
+        this.batch = batch;
+        this.class1 = class1;
+        this.trainer = trainer;
+    }
+
     public String getId() {
         return id;
     }
@@ -72,13 +79,6 @@ public class BatchClass implements Serializable {
 
     public Batch getBatch() {
         return batch;
-    }
-
-    public BatchClass(Batch batch, Classes class1, Employee trainer) {
-        this.id = batch.getId() + "/" + class1.getId();
-        this.batch = batch;
-        this.class1 = class1;
-        this.trainer = trainer;
     }
 
     public void setBatch(Batch batch) {
@@ -134,5 +134,5 @@ public class BatchClass implements Serializable {
     public String toString() {
         return "com.bootcamp.cobaspringapplication.entities.BatchClass[ id=" + id + " ]";
     }
-    
+
 }

@@ -6,7 +6,6 @@
 package com.bootcamp.cobaspringapplication.entities;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.CascadeType;
@@ -20,8 +19,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Temporal;
-import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -37,7 +34,6 @@ import javax.xml.bind.annotation.XmlTransient;
 @NamedQueries({
     @NamedQuery(name = "Assessment.findAll", query = "SELECT a FROM Assessment a")
     , @NamedQuery(name = "Assessment.findById", query = "SELECT a FROM Assessment a WHERE a.id = :id")
-    , @NamedQuery(name = "Assessment.findByDate", query = "SELECT a FROM Assessment a WHERE a.date = :date")
     , @NamedQuery(name = "Assessment.findByScore", query = "SELECT a FROM Assessment a WHERE a.score = :score")})
 public class Assessment implements Serializable {
 
@@ -48,15 +44,9 @@ public class Assessment implements Serializable {
     @Size(min = 1, max = 11)
     @Column(name = "id")
     private String id;
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "date")
-    @Temporal(TemporalType.DATE)
-    private Date date;
-    @Basic(optional = false)
-    @NotNull
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "score")
-    private float score;
+    private Float score;
     @JoinColumn(name = "participant", referencedColumnName = "id")
     @ManyToOne(optional = false, fetch = FetchType.LAZY)
     private Participant participant;
@@ -73,12 +63,6 @@ public class Assessment implements Serializable {
         this.id = id;
     }
 
-    public Assessment(String id, Date date, float score) {
-        this.id = id;
-        this.date = date;
-        this.score = score;
-    }
-
     public String getId() {
         return id;
     }
@@ -87,19 +71,11 @@ public class Assessment implements Serializable {
         this.id = id;
     }
 
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
-    }
-
-    public float getScore() {
+    public Float getScore() {
         return score;
     }
 
-    public void setScore(float score) {
+    public void setScore(Float score) {
         this.score = score;
     }
 

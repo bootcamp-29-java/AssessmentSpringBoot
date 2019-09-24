@@ -8,6 +8,7 @@ package com.bootcamp.cobaspringapplication.services.impl;
 import com.bootcamp.cobaspringapplication.services.IEmployeeRoleService;
 import com.bootcamp.cobaspringapplication.entities.EmployeeRole;
 import com.bootcamp.cobaspringapplication.repositories.EmployeeRoleRepository;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,4 +43,7 @@ public class EmployeeRoleService implements IEmployeeRoleService {
         return er.save(employeeRole).equals(employeeRole);
     }
     
+    public List<EmployeeRole> getSession(String email){
+        return er.getRole(email);
+    }
 }

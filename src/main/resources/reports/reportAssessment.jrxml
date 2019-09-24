@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="null" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="71fb7f60-fd5a-4dc2-9f39-cbf556f2cdba">
+	<property name="ireport.zoom" value="1.5026296018031553"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="249"/>
+	<style name="table">
+		<box>
+			<pen lineWidth="1.0" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TH" mode="Opaque" backcolor="#00FFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_CH" mode="Opaque" backcolor="#BFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<pen lineWidth="0.5" lineColor="#CCCCCC"/>
+		</box>
+	</style>
+	<style name="table 1">
+		<box>
+			<pen lineWidth="1.0" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TH" mode="Opaque" backcolor="#00FFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_CH" mode="Opaque" backcolor="#BFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<style name="table 1_TD" mode="Opaque" backcolor="#FFFFFF">
+		<box>
+			<topPen lineWidth="0.5" lineColor="#000000"/>
+			<bottomPen lineWidth="0.5" lineColor="#000000"/>
+		</box>
+	</style>
+	<subDataset name="Table Dataset 1" uuid="22b7545f-2517-494a-b292-c2c8f200d1c6"/>
+	<subDataset name="Table Dataset 2" uuid="6115a46f-7e76-4669-b58b-446da88d7b15"/>
+	<parameter name="id" class="java.lang.String">
+		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
+	</parameter>
+	<queryString>
+		<![CDATA[SELECT
+     tb_m_batch.`id` AS tb_m_batch_id,
+     tb_m_batch_class.`id` AS tb_m_batch_class_id,
+     tb_m_batch_class.`batch` AS tb_m_batch_class_batch,
+     tb_m_batch_class.`class` AS tb_m_batch_class_class,
+     tb_m_batch_class.`trainer` AS tb_m_batch_class_trainer,
+     tb_m_classes.`id` AS tb_m_classes_id,
+     tb_m_classes.`name` AS tb_m_classes_name,
+     tb_m_criteria.`id` AS tb_m_criteria_id,
+     tb_m_criteria.`name` AS tb_m_criteria_name,
+     tb_m_employee.`id` AS tb_m_employee_id,
+     tb_m_employee.`first_name` AS tb_m_employee_first_name,
+     tb_m_employee.`last_name` AS tb_m_employee_last_name,
+     tb_m_employee.`birth_place` AS tb_m_employee_birth_place,
+     tb_m_employee.`birth_date` AS tb_m_employee_birth_date,
+     tb_m_employee.`gender` AS tb_m_employee_gender,
+     tb_m_employee.`nationality` AS tb_m_employee_nationality,
+     tb_m_employee.`photo` AS tb_m_employee_photo,
+     tb_m_employee.`is_delete` AS tb_m_employee_is_delete,
+     tb_m_employee.`email` AS tb_m_employee_email,
+     tb_m_lesson.`id` AS tb_m_lesson_id,
+     tb_m_lesson.`name` AS tb_m_lesson_name,
+     tb_m_lesson_criteria.`id` AS tb_m_lesson_criteria_id,
+     tb_m_lesson_criteria.`percentage` AS tb_m_lesson_criteria_percentage,
+     tb_m_lesson_criteria.`sylabus` AS tb_m_lesson_criteria_sylabus,
+     tb_m_lesson_criteria.`criteria` AS tb_m_lesson_criteria_criteria,
+     tb_m_sylabus.`id` AS tb_m_sylabus_id,
+     tb_m_sylabus.`percentage` AS tb_m_sylabus_percentage,
+     tb_m_sylabus.`lesson` AS tb_m_sylabus_lesson,
+     tb_m_sylabus.`class` AS tb_m_sylabus_class,
+     tb_tr_assessment.`id` AS tb_tr_assessment_id,
+     tb_tr_assessment.`score` AS tb_tr_assessment_score,
+     tb_tr_assessment.`participant` AS tb_tr_assessment_participant,
+     tb_tr_assessment.`sylabus` AS tb_tr_assessment_sylabus,
+     tb_tr_assessment_detail.`id` AS tb_tr_assessment_detail_id,
+     tb_tr_assessment_detail.`date` AS tb_tr_assessment_detail_date,
+     tb_tr_assessment_detail.`score` AS tb_tr_assessment_detail_score,
+     tb_tr_assessment_detail.`lesson_criteria` AS tb_tr_assessment_detail_lesson_criteria,
+     tb_tr_assessment_detail.`assessment` AS tb_tr_assessment_detail_assessment,
+     tb_tr_participant.`id` AS tb_tr_participant_id,
+     tb_tr_participant.`grade` AS tb_tr_participant_grade,
+     tb_tr_participant.`score` AS tb_tr_participant_score,
+     tb_tr_participant.`batch_class` AS tb_tr_participant_batch_class
+FROM
+tb_tr_assessment_detail 
+JOIN tb_tr_assessment ON (tb_tr_assessment_detail.`assessment` = tb_tr_assessment.`id`)
+JOIN tb_tr_participant ON (tb_tr_participant.`id` = tb_tr_assessment.`participant`)
+JOIN tb_m_lesson_criteria ON (tb_tr_assessment_detail.`lesson_criteria` = tb_m_lesson_criteria.`id`)
+JOIN tb_m_criteria ON (tb_m_lesson_criteria.`criteria` = tb_m_criteria.`id`)
+JOIN tb_m_employee ON (tb_m_employee.`id` = tb_tr_participant.`id`)
+JOIN tb_m_sylabus ON (tb_tr_assessment.`sylabus` = tb_m_sylabus.`id`)
+JOIN tb_m_lesson ON (tb_m_sylabus.`lesson` = tb_m_lesson.`id`)
+JOIN tb_m_batch_class ON (tb_tr_participant.`batch_class` = tb_m_batch_class.`id`)
+JOIN tb_m_classes ON (tb_m_sylabus.`class` = tb_m_classes.`id`)
+JOIN tb_m_batch ON (tb_m_batch.`id` = tb_m_batch_class.`batch`)
+where tb_tr_participant.`id` = $P{id}]]>
+	</queryString>
+	<field name="tb_m_batch_id" class="java.lang.String"/>
+	<field name="tb_m_batch_class_id" class="java.lang.String"/>
+	<field name="tb_m_batch_class_batch" class="java.lang.String"/>
+	<field name="tb_m_batch_class_class" class="java.lang.String"/>
+	<field name="tb_m_batch_class_trainer" class="java.lang.String"/>
+	<field name="tb_m_classes_id" class="java.lang.String"/>
+	<field name="tb_m_classes_name" class="java.lang.String"/>
+	<field name="tb_m_criteria_id" class="java.lang.String"/>
+	<field name="tb_m_criteria_name" class="java.lang.String"/>
+	<field name="tb_m_employee_id" class="java.lang.String"/>
+	<field name="tb_m_employee_first_name" class="java.lang.String"/>
+	<field name="tb_m_employee_last_name" class="java.lang.String"/>
+	<field name="tb_m_employee_birth_place" class="java.lang.String"/>
+	<field name="tb_m_employee_birth_date" class="java.sql.Date"/>
+	<field name="tb_m_employee_gender" class="java.lang.String"/>
+	<field name="tb_m_employee_nationality" class="java.lang.String"/>
+	<field name="tb_m_employee_photo" class="java.lang.String"/>
+	<field name="tb_m_employee_is_delete" class="java.lang.Boolean"/>
+	<field name="tb_m_employee_email" class="java.lang.String"/>
+	<field name="tb_m_lesson_id" class="java.lang.String"/>
+	<field name="tb_m_lesson_name" class="java.lang.String"/>
+	<field name="tb_m_lesson_criteria_id" class="java.lang.String"/>
+	<field name="tb_m_lesson_criteria_percentage" class="java.lang.Float"/>
+	<field name="tb_m_lesson_criteria_sylabus" class="java.lang.String"/>
+	<field name="tb_m_lesson_criteria_criteria" class="java.lang.String"/>
+	<field name="tb_m_sylabus_id" class="java.lang.String"/>
+	<field name="tb_m_sylabus_percentage" class="java.lang.Float"/>
+	<field name="tb_m_sylabus_lesson" class="java.lang.String"/>
+	<field name="tb_m_sylabus_class" class="java.lang.String"/>
+	<field name="tb_tr_assessment_id" class="java.lang.String"/>
+	<field name="tb_tr_assessment_score" class="java.lang.Float"/>
+	<field name="tb_tr_assessment_participant" class="java.lang.String"/>
+	<field name="tb_tr_assessment_sylabus" class="java.lang.String"/>
+	<field name="tb_tr_assessment_detail_id" class="java.lang.String"/>
+	<field name="tb_tr_assessment_detail_date" class="java.sql.Date"/>
+	<field name="tb_tr_assessment_detail_score" class="java.lang.Float"/>
+	<field name="tb_tr_assessment_detail_lesson_criteria" class="java.lang.String"/>
+	<field name="tb_tr_assessment_detail_assessment" class="java.lang.String"/>
+	<field name="tb_tr_participant_id" class="java.lang.String"/>
+	<field name="tb_tr_participant_grade" class="java.lang.String"/>
+	<field name="tb_tr_participant_score" class="java.lang.Float"/>
+	<field name="tb_tr_participant_batch_class" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="91" splitType="Stretch">
+			<image>
+				<reportElement x="453" y="0" width="102" height="91" uuid="7d5a05ff-a765-448b-beed-f4c0ab3aeb52"/>
+				<imageExpression><![CDATA["E:\\Kerjaan Metrodata Group\\Project 3\\Git Project\\AssessmentSpringBoot\\src\\main\\resources\\reports\\metrodata.png"]]></imageExpression>
+			</image>
+			<image>
+				<reportElement x="0" y="0" width="114" height="91" uuid="fc9b0e1e-b5d8-4516-bee8-c1f355a9dfae"/>
+				<imageExpression><![CDATA["E:\\Kerjaan Metrodata Group\\Project 3\\Git Project\\AssessmentSpringBoot\\src\\main\\resources\\reports\\mii.png"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="114" y="0" width="339" height="35" uuid="c707263a-4535-4918-8079-9f84b0915dc6"/>
+				<textElement textAlignment="Center">
+					<font size="24" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Rapor Hasil Bootcamp]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="79" splitType="Stretch">
+			<staticText>
+				<reportElement x="24" y="16" width="100" height="20" uuid="072aa3b1-2752-4236-b623-389c271b6a49"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[First Name	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="16" width="51" height="20" uuid="c0dfe64b-2692-4a50-a596-7baae0c69a49"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Class	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="372" y="56" width="51" height="20" uuid="e562e890-ac8e-47f4-b538-93004801cde0"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Trainer	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="36" width="100" height="20" uuid="eb5a1984-57c4-4296-89f8-16c696a85e0a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Last Name	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="24" y="56" width="100" height="20" uuid="dbb0b9e8-21a8-4caa-aa1f-2f369f241c68"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Email		:]]></text>
+			</staticText>
+			<line>
+				<reportElement x="0" y="5" width="555" height="1" uuid="063c8776-b1ef-4f40-aef2-b6bf20760734"/>
+			</line>
+			<staticText>
+				<reportElement x="372" y="36" width="51" height="20" uuid="6299cbac-7d03-4143-b29a-c1507cd291b3"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Batch	:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="124" y="16" width="191" height="20" uuid="3f7792cf-c662-4956-a43f-1db779e39d88"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_employee_first_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="36" width="191" height="20" uuid="aaea47d0-6477-4232-a8d5-7ca87089fba1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_employee_last_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="124" y="56" width="191" height="20" uuid="bfcc87dc-59b9-4af1-b1f6-5a61cabe731a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_employee_email}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="16" width="125" height="20" uuid="bf3d2d25-bc68-4f90-9067-65c9f5bed25d"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_lesson_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="36" width="125" height="20" uuid="afaf5d01-b447-44ae-9aae-25b277962097"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_batch_id}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="423" y="56" width="125" height="20" uuid="a57a9577-e908-4fc0-8705-ce9f352f90f1"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_batch_class_trainer}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="61" splitType="Stretch">
+			<staticText>
+				<reportElement x="14" y="31" width="100" height="20" uuid="ec5189d4-71f0-4a32-8574-0c8ccd0326f4"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Materi]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="148" y="31" width="257" height="20" uuid="b3b22450-3451-4988-bb95-4d14dfc6e021"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Criteria]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="434" y="31" width="100" height="20" uuid="ecfaa391-e96d-4c4c-905e-5c24930a8701"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Score]]></text>
+			</staticText>
+			<line>
+				<reportElement x="11" y="55" width="534" height="1" uuid="deb80fc8-8cbb-43b9-969d-c760590b9c3b"/>
+			</line>
+			<line>
+				<reportElement x="11" y="26" width="534" height="1" uuid="98338343-3a8f-4a46-89b4-bc501dc103e7"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="30" splitType="Stretch">
+			<textField>
+				<reportElement x="14" y="2" width="100" height="20" uuid="3fb3f8b5-88d9-4dba-8919-25f127f72f68"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_lesson_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="148" y="2" width="257" height="20" uuid="d725bed3-7d57-4b46-a402-10137ca25090"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_criteria_name}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="434" y="2" width="100" height="20" uuid="a686edf1-01f7-4fdd-82a6-c7c244075fbb"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_assessment_detail_score}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="11" y="24" width="534" height="1" forecolor="#00FFFF" uuid="6419f9ff-22b3-4ed4-8226-ed9a44af43b5"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band height="179" splitType="Stretch">
+			<rectangle>
+				<reportElement x="271" y="0" width="234" height="53" uuid="a701f35c-5eb5-4d76-ac1d-52ccdf75c1c8"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="312" y="7" width="93" height="20" uuid="6e77a0a4-ea0a-4b74-bbeb-c34ab04952c9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Average	:]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="312" y="27" width="93" height="20" uuid="585ed06f-4cb4-43e1-8256-2496bf951ba5"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Grade		:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="405" y="7" width="100" height="20" uuid="51cd1e02-a7fa-4aa3-a445-0b5655e012e9"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_participant_score}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="405" y="27" width="100" height="20" uuid="24de70e0-a710-4599-b396-efde2277384a"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_tr_participant_grade}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="405" y="80" width="100" height="20" uuid="47748ae6-e058-494f-bc0b-b031ff0d27b2"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Trainer,]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="405" y="137" width="100" height="20" uuid="f96ccaa8-2719-43af-8b1f-1fdceac8820d"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[(		)]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="434" y="157" width="71" height="20" uuid="00cbbcc0-04aa-418a-b10b-63ce693b9a34"/>
+				<textElement>
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{tb_m_batch_class_trainer}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="405" y="157" width="27" height="20" uuid="6816ba72-7873-4991-9b6a-28c07c29c3c6"/>
+				<textElement>
+					<font size="12" isBold="true"/>
+				</textElement>
+				<text><![CDATA[ID : ]]></text>
+			</staticText>
+		</band>
+	</columnFooter>
+	<pageFooter>
+		<band height="54" splitType="Stretch"/>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch"/>
+	</summary>
+</jasperReport>

@@ -68,15 +68,20 @@ public class AssessmentController {
     IAssessmentService ias;
     @Autowired
     IAssessmentDetailService iads;
-
-    @GetMapping("/showbatchclass")
-    public String showBatchClass(Model model) {
-        model.addAttribute("batchClasses", ibcs.getAll());
-        return "showbatchclass";
+    
+    @RequestMapping("/adminHome")
+    public String home(){
+        return "adminhome";
+    }
+    
+    @RequestMapping("/trainerHome")
+    public String home2(){
+        return "trainerhome";
     }
 
-    @GetMapping("/addbatchclass")
-    public String addBatchClass(Model model) {
+    @GetMapping("/managebatchclass")
+    public String manageBatchClass(Model model) {
+        model.addAttribute("batchClasses", ibcs.getAll());
         model.addAttribute("id", ibs.genId());
         model.addAttribute("classes", ics.getAll());
         List<Employee> trainers = new ArrayList<>();
@@ -86,20 +91,26 @@ public class AssessmentController {
             }
         }
         model.addAttribute("trainers", trainers);
-        return "addbatchclass";
+        return "managebatchclass";
     }
 
     @PostMapping("/addbatchclass")
-    public String addBatchClass2(Model model, @ModelAttribute("id") String id, @RequestParam("class2") List<String> class2, @ModelAttribute("trainer") String trainer) {
+    public String addBatchClass(Model model, @ModelAttribute("id") String id, @RequestParam("class2") List<String> class2, @ModelAttribute("trainer") String trainer) {
         ibs.save(new Batch(id));
         for (String string : class2) {
             ibcs.save(new BatchClass(ibs.getById(id), ics.getById(string), ies.getById(trainer)));
         }
-        return "redirect:/addbatchclass";
+        return "redirect:/managebatchclass";
     }
-
-    @GetMapping("/addparticipant")
-    public String addParticipant(Model model) {
+    
+    @GetMapping("deleteBatchClass")
+    public String deleteBatchClass(String id){
+        ibcs.delete(id);
+        return "redirect:/managebatchclass";
+    }
+    
+    @RequestMapping("/manageparticipant")
+    public String manageParticipant(Model model) {
         model.addAttribute("batchClasses", ibcs.getAll());
         List<Employee> participants = new ArrayList<>();
         for (EmployeeRole employeeRole : iers.getAll()) {
@@ -108,21 +119,21 @@ public class AssessmentController {
             }
         }
         model.addAttribute("participants", participants);
-        return "addparticipant";
+        return "manageparticipant";
     }
 
     @PostMapping("/addparticipant")
-    public String addParticipant2(Model model, @ModelAttribute("batchClass") String batchClass, @RequestParam("participants") List<String> participants) {
+    public String addParticipant(Model model, @ModelAttribute("batchClass") String batchClass, @RequestParam("participants") List<String> participants) {
         for (String participant : participants) {
             ips.save(new Participant(participant, ibcs.getById(batchClass)));
         }
-        return "redirect:/addparticipant";
+        return "redirect:/manageparticipant";
     }
 
-    @RequestMapping("/content")
-    public String loadContent(Model model) {
+    @GetMapping("/inputnilai")
+    public String inputNilai(Model model) {
         model.addAttribute("batchClasses", ibcs.getAll());
-        return "cobaajax";
+        return "inputnilai";
     }
     @PostMapping("/inputnilai")
     public String inputNilai(@RequestParam("nilai") List<String> nilai, @ModelAttribute("criteria") String criteria, @RequestParam("id") List<String> id) {
@@ -137,7 +148,7 @@ public class AssessmentController {
                 iads.save(new AssessmentDetail(Float.parseFloat(nilai.get(i)), ilcs.getById(criteria), assessment));
             }
         }
-        return "redirect:/content";
+        return "redirect:/inputnilai";
     }
 
     @GetMapping("/loadform")
@@ -170,5 +181,18 @@ public class AssessmentController {
         model.addAttribute("criterias", criterias);
         return "content :: criterias2";
     }
-
+    
+//    jasper report
+//    @RequestMapping(value = "report", method = RequestMethod.GET)
+//	public void report(HttpServletResponse response) throws Exception {
+//		response.setContentType("text/html");
+//		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(ProductService);
+//		InputStream inputStream = this.getClass().getResourceAsStream("/reports/reportAssessment.jrxml");
+//		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
+//		HtmlExporter exporter = new HtmlExporter(DefaultJasperReportsContext.getInstance());
+//		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+//		exporter.setExporterOutput(new SimpleHtmlExporterOutput(response.getWriter()));
+//		exporter.exportReport();
+//	}
 }

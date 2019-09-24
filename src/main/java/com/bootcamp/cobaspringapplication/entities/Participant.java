@@ -67,7 +67,6 @@ public class Participant implements Serializable {
     public Participant(String id) {
         this.id = id;
     }
-
     public Participant(String id, BatchClass batchClass) {
         this.id = id;
         this.batchClass = batchClass;
