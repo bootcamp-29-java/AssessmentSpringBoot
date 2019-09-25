@@ -10,6 +10,8 @@ import com.bootcamp.cobaspringapplication.repositories.SylabusRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bootcamp.cobaspringapplication.services.ISylabusService;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -42,4 +44,15 @@ public class SylabusService implements ISylabusService {
         return er.save(sylabus).equals(sylabus);
     }
     
+    @Override
+    public String genId() {
+        List<Sylabus> ids = new ArrayList<>();
+        int max = 0;
+        for (Sylabus sylabus : getAll()) {
+            if (Integer.parseInt(sylabus.getId()) > max) {
+                max = Integer.parseInt(sylabus.getId());
+            }
+        }
+        return ++max + "";
+    }
 }

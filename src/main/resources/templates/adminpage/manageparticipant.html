@@ -73,7 +73,7 @@ and open the template in the editor.
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form method="POST" th:action="@{/addparticipant}">
+                        <form method="POST" th:action="@{/adminpage/addparticipant}">
                             <div class="form-row">
                                 <div class="form-group col-md-12">
                                     <label>Batch Class :</label>
@@ -99,7 +99,7 @@ and open the template in the editor.
             </div>
         </div>
 
-        <div class="d-flex toggled" id="wrapper">
+        <div class="d-flex" id="wrapper">
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
@@ -108,9 +108,12 @@ and open the template in the editor.
                     <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                     <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
                     <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                    <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">Data Participant</a>
                     <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
                     <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
                     <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
+                    <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -154,24 +157,28 @@ and open the template in the editor.
                         <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Participant to Class</button>
                     </diV>
                     <br>
-                    <table class="table table-hover" id="asd">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>ID</th>
-                                <th>Name</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:index=1 th:each="as : ${participants}">
-                                <td></td>
-                                <td th:text="${as.id}"></td>
-                                <td th:text="${as.firstName + ' ' + as.lastName}"></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="asd" class="table table-hover table-sm table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:index=1 th:each="as : ${participants}">
+                                        <td></td>
+                                        <td th:text="${as.id}"></td>
+                                        <td th:text="${as.firstName + ' ' + as.lastName}"></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <!-- /#page-content-wrapper -->
                     <!-- Footer -->
                     <footer class="page-footer font-small cyan darken-3">
@@ -231,5 +238,16 @@ and open the template in the editor.
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <script src="../js/test.js"></script>
+
+        <!--Sweet Alert-->
+        <script th:inline="javascript">
+            var msg = [[${message}]]
+            if (msg == "Data Berhasil Disimpan" || msg == "Data Berhasil Dihapus") {
+                swal("Sukses!", msg, "success");
+            } else if (msg == "Data Gagal Disimpan" || msg == "Data Gagal Dihapus") {
+                swal("Oops!", msg, "error");
+            }
+        </script>
+        <!--End Swee Alert-->
     </body>
 </html>

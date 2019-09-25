@@ -26,8 +26,27 @@ import com.bootcamp.cobaspringapplication.services.IEmployeeRoleService;
 import com.bootcamp.cobaspringapplication.services.IEmployeeService;
 import com.bootcamp.cobaspringapplication.services.ILessonCriteriaService;
 import com.bootcamp.cobaspringapplication.services.ILessonService;
+import com.bootcamp.cobaspringapplication.services.IProductService;
+import com.bootcamp.cobaspringapplication.services.impl.ProductService;
+import java.io.InputStream;
+import java.sql.Connection;
+import java.sql.DriverManager;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletResponse;
+import net.sf.jasperreports.engine.DefaultJasperReportsContext;
+import net.sf.jasperreports.engine.JRDataSource;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
+import net.sf.jasperreports.engine.export.HtmlExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -68,14 +87,14 @@ public class AssessmentController {
     IAssessmentService ias;
     @Autowired
     IAssessmentDetailService iads;
-    
+
     @RequestMapping("/adminpage/adminhome")
-    public String home(){
+    public String home() {
         return "/adminpage/adminhome";
     }
-    
+
     @RequestMapping("/trainerpage/trainerhome")
-    public String home2(){
+    public String home2() {
         return "/trainerpage/trainerhome";
     }
 
@@ -84,13 +103,20 @@ public class AssessmentController {
         model.addAttribute("batchClasses", ibcs.getAll());
         return "/trainerpage/inputnilai";
     }
+
+    @GetMapping("/trainerpage/participantbybatchclass")
+    public String participantByBatchClass(Model model) {
+        model.addAttribute("batchClasses", ibcs.getAll());
+        return "/trainerpage/participantbybatchclass";
+    }
+
     @PostMapping("/inputnilai")
     public String inputNilai(@RequestParam("nilai") List<String> nilai, @ModelAttribute("criteria") String criteria, @RequestParam("id") List<String> id) {
         for (int i = 0; i < id.size(); i++) {
             if (!nilai.get(i).equals("")) {
                 Assessment assessment = null;
                 for (Assessment assessment1 : ias.getAll()) {
-                    if (assessment1.getParticipant().getId().equals(id.get(i)) && assessment1.getSylabus().getId().equals(ilcs.getById(criteria).getSylabus().getId()) ) {
+                    if (assessment1.getParticipant().getId().equals(id.get(i)) && assessment1.getSylabus().getId().equals(ilcs.getById(criteria).getSylabus().getId())) {
                         assessment = assessment1;
                     }
                 }
@@ -130,7 +156,72 @@ public class AssessmentController {
         model.addAttribute("criterias", criterias);
         return "content :: criterias2";
     }
+
+    @GetMapping("/loadparticipants")
+    public String loadParticipants(Model model, String id) {
+        List<Participant> participants = new ArrayList<>();
+        for (Participant participant : ips.getAll()) {
+            if (participant.getBatchClass().getId().equals(id)) {
+                participants.add(participant);
+            }
+        }
+        model.addAttribute("participants", participants);
+        return "content :: participantss";
+    }
     
+    @GetMapping("/loadscores")
+    public String loadScores(Model model, String id, String id2) {
+        List<AssessmentDetail> scores = new ArrayList<>();
+        for (AssessmentDetail assessmentDetail : iads.getAll()) {
+            if (assessmentDetail.getLessonCriteria().getId().equals(id) && assessmentDetail.getAssessment().getParticipant().getBatchClass().getId().equals(id2)) {
+                scores.add(assessmentDetail);
+            }
+        }
+        model.addAttribute("scores", scores);
+        return "content :: scoress";
+    }
+    
+    @GetMapping("/loadscore2")
+    public String loadScore2(Model model, String id) {
+        List<Assessment> assessments = new ArrayList<>();
+        String bcId = ips.getById(id).getBatchClass().getId();
+        for (Assessment assessment : ias.getAll()) {
+            if (assessment.getParticipant().getId().equals(id)) {
+                assessments.add(assessment);
+            }
+        }
+        model.addAttribute("assessments", assessments);
+        model.addAttribute("bcId", bcId);
+        return "content :: score2";
+    }
+
+    @GetMapping("/testprint")
+    public String testPrint(Model model, String id){
+        System.out.println(id);
+        model.addAttribute("printId", id);
+        return "report";
+    }
+    
+//    @Autowired
+//    IProductService productService;
+//
+//    @GetMapping("/testprint")
+//    public String testPrint(Model model, String id, HttpServletResponse response) throws Exception {
+//        Class.forName("com.mysql.jdbc.Driver");
+//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_assessment", "root", "");
+//        response.setContentType("text/html");
+//        Map<String, Object> item = new HashMap<String, Object>();
+//        item.put("id", id);
+//        InputStream inputStream = this.getClass().getResourceAsStream("/reports/reportAssessment.jasper");
+//        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
+//        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, item, con);
+//        HtmlExporter exporter = new HtmlExporter(DefaultJasperReportsContext.getInstance());
+//        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
+//        exporter.setExporterOutput(new SimpleHtmlExporterOutput(response.getWriter()));
+//        exporter.exportReport();
+//        return "report";
+//    }
+
 //    jasper report
 //    @RequestMapping(value = "report", method = RequestMethod.GET)
 //	public void report(HttpServletResponse response) throws Exception {

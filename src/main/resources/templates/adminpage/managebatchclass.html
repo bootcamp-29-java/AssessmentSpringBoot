@@ -13,7 +13,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-        
+
         <style type="text/css"> 
             body {
                 overflow-x: hidden;
@@ -104,7 +104,7 @@ and open the template in the editor.
             </div>
         </div>
 
-        <div class="d-flex toggled" id="wrapper">
+        <div class="d-flex" id="wrapper">
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
@@ -113,9 +113,12 @@ and open the template in the editor.
                     <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
                     <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
                     <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                    <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">Data Participant</a>
                     <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
                     <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
                     <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
+                    <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -159,28 +162,33 @@ and open the template in the editor.
                         <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Batch Class</button>
                     </diV>
                     <br>
-                    <table class="table table-hover" id="asd">
-                        <thead>
-                            <tr>
-                                <th>No.</th>
-                                <th>ID</th>
-                                <th>Batch</th>
-                                <th>Class</th>
-                                <th>Trainer</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr th:index=1 th:each="as : ${batchClasses}">
-                                <td></td>
-                                <td th:text="${as.id}"></td>
-                                <td th:text="${as.batch.id}"></td>
-                                <td th:text="${as.class1.name}"></td>
-                                <td th:text="${as.trainer.firstName + ' ' + as.trainer.lastName}"></td>
-                                <td></td>
-                            </tr>
-                        </tbody>
-                    </table>
+
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="asd" class="table table-hover table-sm table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No.</th>
+                                        <th>ID</th>
+                                        <th>Batch</th>
+                                        <th>Class</th>
+                                        <th>Trainer</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:index=1 th:each="as : ${batchClasses}">
+                                        <td></td>
+                                        <td th:text="${as.id}"></td>
+                                        <td th:text="${as.batch.id}"></td>
+                                        <td th:text="${as.class1.name}"></td>
+                                        <td th:text="${as.trainer.firstName + ' ' + as.trainer.lastName}"></td>
+                                        <td></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                     <!-- /#page-content-wrapper -->
                     <!-- Footer -->
                     <footer class="page-footer font-small cyan darken-3">
@@ -240,5 +248,16 @@ and open the template in the editor.
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <script src="../js/test.js"></script>
+
+        <!--Sweet Alert-->
+        <script th:inline="javascript">
+            var msg = [[${message}]]
+            if (msg == "Data Berhasil Disimpan" || msg == "Data Berhasil Dihapus") {
+                swal("Sukses!", msg, "success");
+            } else if (msg == "Data Gagal Disimpan" || msg == "Data Gagal Dihapus") {
+                swal("Oops!", msg, "error");
+            }
+        </script>
+        <!--End Swee Alert-->
     </body>
 </html>

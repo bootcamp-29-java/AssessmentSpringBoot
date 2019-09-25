@@ -26,6 +26,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -60,8 +61,13 @@ public class CriteriaController {
     IAssessmentDetailService iads;
 
     @PostMapping("/addcriteria")
-    public String addCriteria(Model model, @ModelAttribute("id") String id, @ModelAttribute("name") String name) {
-        ics2.save(new Criteria(id, name));
+    public String addCriteria(Model model, @ModelAttribute("id") String id, @ModelAttribute("name") String name, RedirectAttributes redirectAttributes) {
+        try {
+            ics2.save(new Criteria(id, name));
+            redirectAttributes.addFlashAttribute("status", "Data Berhasil Disimpan");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("status", "Data Gagal Disimpan");
+        }
         return "redirect:/adminpage/managecriteria";
     }
 

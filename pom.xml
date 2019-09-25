@@ -57,6 +57,22 @@
             <artifactId>scala-library</artifactId>
             <version>2.11.0</version>
         </dependency>
+        
+        <!-- JSTL tag lib -->
+        <!-- https://mvnrepository.com/artifact/javax.servlet.jsp.jstl/javax.servlet.jsp.jstl-api -->
+        <dependency>
+            <groupId>javax.servlet.jsp.jstl</groupId>
+            <artifactId>javax.servlet.jsp.jstl-api</artifactId>
+            <version>1.2.2</version>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/taglibs/standard -->
+        <dependency>
+            <groupId>taglibs</groupId>
+            <artifactId>standard</artifactId>
+            <version>1.1.2</version>
+        </dependency>
+
+        
         <!-- https://mvnrepository.com/artifact/javax.servlet/jstl -->
         <dependency>
             <groupId>javax.servlet</groupId>
@@ -69,7 +85,6 @@
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
 
         
         <!-- https://mvnrepository.com/artifact/javax.mail/javax.mail-api -->
@@ -79,6 +94,7 @@
             <version>1.6.2</version>
         </dependency>
         
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
@@ -89,7 +105,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
             <version>2.1.8.RELEASE</version>
         </dependency>
-<!--        <dependency>
+        <!--        <dependency>
             <groupId>org.eclipse.persistence</groupId>
             <artifactId>eclipselink</artifactId>
             <version>2.5.2</version>

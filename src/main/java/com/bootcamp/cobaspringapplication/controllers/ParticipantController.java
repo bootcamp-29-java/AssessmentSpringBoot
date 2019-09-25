@@ -34,6 +34,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -67,7 +68,7 @@ public class ParticipantController {
     @Autowired
     IAssessmentDetailService iads;
 
-    @RequestMapping("/manageparticipant")
+    @RequestMapping("/adminpage/manageparticipant")
     public String manageParticipant(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("batchClasses", ibcs.getAll());
@@ -81,11 +82,18 @@ public class ParticipantController {
         return "/adminpage/manageparticipant";
     }
 
-    @PostMapping("/addparticipant")
-    public String addParticipant(Model model, @ModelAttribute("batchClass") String batchClass, @RequestParam("participants") List<String> participants) {
+    @PostMapping("/adminpage/addparticipant")
+    public String addParticipant(Model model, @ModelAttribute("batchClass") String batchClass, @RequestParam("participants") List<String> participants, RedirectAttributes redirectAttributes) {
         for (String participant : participants) {
-            ips.save(new Participant(participant, ibcs.getById(batchClass)));
+            System.out.println(participant);
+            try {
+                ips.save(new Participant(participant, ibcs.getById(batchClass)));
+                redirectAttributes.addFlashAttribute("status", "Data Berhasil Disimpan");
+            } catch (Exception e) {
+                redirectAttributes.addFlashAttribute("status", "Data Gagal Disimpan");
+            }
         }
+        
         return "redirect:/adminpage/manageparticipant";
     }
 }

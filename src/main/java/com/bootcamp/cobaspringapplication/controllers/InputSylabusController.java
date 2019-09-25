@@ -5,13 +5,8 @@
  */
 package com.bootcamp.cobaspringapplication.controllers;
 
-import com.bootcamp.cobaspringapplication.entities.Batch;
-import com.bootcamp.cobaspringapplication.entities.BatchClass;
 import com.bootcamp.cobaspringapplication.entities.Classes;
-import com.bootcamp.cobaspringapplication.entities.Criteria;
-import com.bootcamp.cobaspringapplication.entities.Employee;
-import com.bootcamp.cobaspringapplication.entities.EmployeeRole;
-import com.bootcamp.cobaspringapplication.entities.Participant;
+import com.bootcamp.cobaspringapplication.entities.Sylabus;
 import com.bootcamp.cobaspringapplication.services.IAssessmentDetailService;
 import com.bootcamp.cobaspringapplication.services.IAssessmentService;
 import com.bootcamp.cobaspringapplication.services.IBatchClassService;
@@ -24,26 +19,21 @@ import com.bootcamp.cobaspringapplication.services.ILessonCriteriaService;
 import com.bootcamp.cobaspringapplication.services.ILessonService;
 import com.bootcamp.cobaspringapplication.services.IParticipantService;
 import com.bootcamp.cobaspringapplication.services.ISylabusService;
-import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
  * @author arman
  */
 @Controller
-public class ClassesController {
+public class InputSylabusController {
 
     @Autowired
     IBatchClassService ibcs;
@@ -70,22 +60,18 @@ public class ClassesController {
     @Autowired
     IAssessmentDetailService iads;
 
-    @RequestMapping("/adminpage/manageclasses")
-    public String manageClasses(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        model.addAttribute("classes", ics.getAll());
-        return "/adminpage/manageclasses";
+    @GetMapping("/testsylabus")
+    public String manageBatchClass(Model model) {
+        model.addAttribute("lessons", ils.getAll());
+        return "testsylabus";
     }
 
-    @PostMapping("/addclasses")
-    public String addClasses(Model model, @ModelAttribute("id") String id, @ModelAttribute("name") String name, RedirectAttributes redirectAttributes) {
-        try {
-            ics.save(new Classes(id, name));
-            redirectAttributes.addFlashAttribute("status", "Data Berhasil Disimpan");
-        } catch (Exception e) {
-            redirectAttributes.addFlashAttribute("status", "Data Gagal Disimpan");
+    @PostMapping("/addlessons")
+    public String addLessons(Model model, @ModelAttribute("class") String className, @ModelAttribute("classId") String classId, @RequestParam("lessons") List<String> lessons, @RequestParam("percentages") List<String> percentages, @RequestParam("ids") List<String> ids) {
+        ics.save(new Classes(classId, className));
+        for (int i = 0; i < lessons.size(); i++) {
+            iss.save(new Sylabus(Float.parseFloat(percentages.get(i)), ils.getById(lessons.get(i)), ics.getById(classId)));
         }
-        return "redirect:/adminpage/manageclasses";
+        return "redirect:/testsylabus";
     }
-
 }

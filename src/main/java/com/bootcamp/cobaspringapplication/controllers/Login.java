@@ -29,7 +29,7 @@ public class Login {
 
     @Autowired
     private EmployeeRoleService employeeRoleService;
-    
+
     @Autowired
     private EmployeeService employeeService;
 
@@ -40,12 +40,13 @@ public class Login {
     }
 
     @RequestMapping("/")
-    public String home(Model model) {
+    public String home(Model model, RedirectAttributes redirect) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if(auth.getAuthorities().toString().contains("Admin")){
+        if (auth.getAuthorities().toString().contains("Admin")) {
+            redirect.addFlashAttribute("message", "Login Success");
             return "redirect:/adminpage/adminhome";
-        }
-        else if(auth.getAuthorities().toString().contains("Trainer")){
+        } else if (auth.getAuthorities().toString().contains("Trainer")) {
+            redirect.addFlashAttribute("message", "Login Success");
             return "redirect:/trainerpage/trainerhome";
         }
         System.out.println(auth.getAuthorities().toString());
@@ -55,13 +56,13 @@ public class Login {
     @RequestMapping("/adminpage/home")
     public String adminhome(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "adminpage/home";
+        return "adminpage/adminhome";
     }
 
     @RequestMapping("/trainerpage/home")
     public String employeehome(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        return "trainerpage/home";
+        return "trainerpage/trainerhome";
     }
 
     @RequestMapping("/loginerror")

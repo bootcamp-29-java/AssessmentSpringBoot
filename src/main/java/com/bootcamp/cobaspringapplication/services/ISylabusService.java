@@ -21,4 +21,5 @@ public interface ISylabusService {
 
     boolean save(Sylabus sylabus);
     
+    public String genId();
 }

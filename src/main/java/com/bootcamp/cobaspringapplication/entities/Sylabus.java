@@ -65,6 +65,13 @@ public class Sylabus implements Serializable {
     public Sylabus(String id) {
         this.id = id;
     }
+    
+    public Sylabus(float percentage, Lesson lesson, Classes class1) {
+        this.id = class1.getId() + "/" + lesson.getId();
+        this.lesson = lesson;
+        this.class1 = class1;
+        this.percentage = percentage;
+    }
 
     public Sylabus(String id, float percentage) {
         this.id = id;

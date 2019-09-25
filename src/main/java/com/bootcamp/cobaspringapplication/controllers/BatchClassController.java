@@ -32,6 +32,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
  *
@@ -91,8 +92,13 @@ public class BatchClassController {
     }
 
     @GetMapping("deleteBatchClass")
-    public String deleteBatchClass(String id) {
-        ibcs.delete(id);
+    public String deleteBatchClass(String id, RedirectAttributes redirectAttributes) {
+        try {
+            ibcs.delete(id);
+            redirectAttributes.addFlashAttribute("status", "Data Berhasil Dihapus");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("status", "Data Gagal Dihapus");
+        }
         return "redirect:/adminpage/managebatchclass";
     }
 }

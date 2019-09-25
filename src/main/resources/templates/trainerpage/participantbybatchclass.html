@@ -12,6 +12,7 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <link rel="stylesheett" href="https://cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css">
         <style type="text/css"> 
             body {
                 overflow-x: hidden;
@@ -64,14 +65,16 @@ and open the template in the editor.
     <body>
 
 
-        <div class="d-flex toggled" id="wrapper">
+        <div class="d-flex" id="wrapper">
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
                 <div class="sidebar-heading">Start Bootstrap </div>
                 <div class="list-group list-group-flush">
-                    <a href="/2" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="/inputnilai" class="list-group-item list-group-item-action bg-light">Input Nilai</a>
+                    <a href="/trainerpage/trainerhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    <a href="/trainerpage/inputnilai" class="list-group-item list-group-item-action bg-light">Input Nilai</a>
+                    <a href="/trainerpage/participantbybatchclass" class="list-group-item list-group-item-action bg-light">View Participant</a>
+                    <a href="/trainerpage/AssessmentView" class="list-group-item list-group-item-action bg-light">View Assessment</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -92,14 +95,14 @@ and open the template in the editor.
                                 <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Link</a>
+                                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link" href="#">Logout</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     Dropdown
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#"></a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Something else here</a>
@@ -110,83 +113,88 @@ and open the template in the editor.
                 </nav>
                 <br>
                 <div class="container">
-                    <select name="batchClass" id="batchClass">
-                        <option th:each="as : ${batchClasses}" th:value="${as.id}" th:text="${as.batch.id + ' ' + as.class1.name}"></option>
-                    </select> 
-                    <div id="participantss">
-                        Content goes here
-                    </div>
-                    <input type="submit" value="Submit">
-                    <!-- JQury from Google CDN -->
-                    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+                    <div class="card"> 
+                        <div class="card-body">
+                            <div class="form-group col-md-2">
 
-                    <script>
-                        $(document).ready(function () {
-
-                            //call function when page is loaded
-                            getForm();
-
-                            //set on change listener
-                            $('#batchClass').change(getForm);
-
-                            function getForm() {
-
-                                //create url to request fragment
-                                var url1 = '/loadparticipants?id=' + $('#batchClass').val();
-
-                                //load fragment and replace content
-                                $('#participantss').load(url1);
-                            }
-                        })
-                    </script>
-                    <!-- /#page-content-wrapper -->
-                    <!-- Footer -->
-                    <footer class="page-footer font-small cyan darken-3">
-
-                        <!-- Footer Elements -->
-                        <div class="container">
-
-                            <!-- Grid row-->
-                            <div class="row">
-
-                                <!-- Grid column -->
-                                <div class="col-md-12 py-5">
-                                    <div class="mb-5 flex-center">
-
-                                        <!-- Facebook -->
-                                        <a class="fb-ic">
-                                            <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!-- Twitter -->
-                                        <a class="tw-ic">
-                                            <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!-- Google +-->
-                                        <a class="gplus-ic">
-                                            <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!--Linkedin -->
-                                        <a class="li-ic">
-                                            <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!--Instagram-->
-                                        <a class="ins-ic">
-                                            <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!--Pinterest-->
-                                        <a class="pin-ic">
-                                            <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- Grid column -->
-
+                                <select name="batchClass" id="batchClass" class="form-control">
+                                    <option th:each="as : ${batchClasses}" th:value="${as.id}" th:text="${as.batch.id + ' ' + as.class1.name}"></option>
+                                </select> 
                             </div>
-                            <!-- Grid row-->
+                            <div id="participantss">
+                                Content goes here
+                            </div>
+                            <!-- JQury from Google CDN -->
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+                            <script>
+                                $(document).ready(function () {
+
+                                    //call function when page is loaded
+                                    getForm();
+
+                                    //set on change listener
+                                    $('#batchClass').change(getForm);
+
+                                    function getForm() {
+
+                                        //create url to request fragment
+                                        var url1 = '/loadparticipants?id=' + $('#batchClass').val();
+
+                                        //load fragment and replace content
+                                        $('#participantss').load(url1);
+                                    }
+                                })
+                            </script>
+                            <!-- /#page-content-wrapper -->
+                            <!-- Footer -->
+                            <footer class="page-footer font-small cyan darken-3">
+
+                                <!-- Footer Elements -->
+                                <div class="container">
+
+                                    <!-- Grid row-->
+                                    <div class="row">
+
+                                        <!-- Grid column -->
+                                        <div class="col-md-12 py-5">
+                                            <div class="mb-5 flex-center">
+
+                                                <!-- Facebook -->
+                                                <a class="fb-ic">
+                                                    <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                                                </a>
+                                                <!-- Twitter -->
+                                                <a class="tw-ic">
+                                                    <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                                                </a>
+                                                <!-- Google +-->
+                                                <a class="gplus-ic">
+                                                    <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                                                </a>
+                                                <!--Linkedin -->
+                                                <a class="li-ic">
+                                                    <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                                                </a>
+                                                <!--Instagram-->
+                                                <a class="ins-ic">
+                                                    <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
+                                                </a>
+                                                <!--Pinterest-->
+                                                <a class="pin-ic">
+                                                    <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <!-- Grid column -->
+
+                                    </div>
+                                    <!-- Grid row-->
+                                </div>
                         </div>
+                    </div>
                 </div>
             </div>
-
         </div>
         <footer class="page-footer font-small blue">
             <div class="footer-copyright text-center py-3">© 2018 Copyright:
@@ -195,8 +203,20 @@ and open the template in the editor.
         </footer>
         <script src="vendor/jquery/jquery.min.js"></script>
         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-        <script src="js/test.js"></script>
+        <script src="../js/test.js"></script>
+        
+        <!--Sweet Alert-->
+        <script th:inline="javascript">
+            var msg = [[${message}]]
+            if (msg == "Data Berhasil Disimpan" || msg == "Data Berhasil Dihapus") {
+                swal("Sukses!", msg, "success");
+            } else if (msg == "Data Gagal Disimpan" || msg == "Data Gagal Dihapus") {
+                swal("Oops!", msg, "error");
+            }
+        </script>
+        <!--End Swee Alert-->
     </body>
 </html>

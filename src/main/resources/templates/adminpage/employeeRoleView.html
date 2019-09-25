@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"> 
+        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.9/js/mdb.min.js"></script>
+        <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+        <style type="text/css"> 
+            body {
+                overflow-x: hidden;
+            }
+            #sidebar-wrapper {
+                min-height: 100vh;
+                margin-left: -15rem;
+                -webkit-transition: margin .25s ease-out;
+                -moz-transition: margin .25s ease-out;
+                -o-transition: margin .25s ease-out;
+                transition: margin .25s ease-out;
+            }
+
+            #sidebar-wrapper .sidebar-heading {
+                padding: 0.875rem 1.25rem;
+                font-size: 1.2rem;
+            }
+
+            #sidebar-wrapper .list-group {
+                width: 15rem;
+            }
+
+            #page-content-wrapper {
+                min-width: 100vw;
+            }
+
+            #wrapper.toggled #sidebar-wrapper {
+                margin-left: 0;
+            }
+
+            @media (min-width: 768px) {
+                #sidebar-wrapper {
+                    margin-left: 0;
+                }
+
+                #page-content-wrapper {
+                    min-width: 0;
+                    width: 100%;
+                }
+
+                #wrapper.toggled #sidebar-wrapper {
+                    margin-left: -15rem;
+                }
+            }
+        </style>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <script type="text/javascript" src="dataTable.js"></script>
+
+    <body th:attr="onload='setAlertSave(\''+${status}+'\')'">
+        <div class="d-flex" id="wrapper">
+
+            <!-- Sidebar -->
+            <div class="bg-light border-right" id="sidebar-wrapper">
+                <div class="sidebar-heading">Start Bootstrap </div>
+                <div class="list-group list-group-flush">
+                    <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
+                    <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
+                    <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                    <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">Data Participant</a>
+                    <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
+                    <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
+                    <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
+                    <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
+                </div>
+            </div>
+            <!-- /#sidebar-wrapper -->
+
+            <!-- Page Content -->
+            <div id="page-content-wrapper">
+
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <button class="btn btn-primary" id="menu-toggle">Sidebar</button>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ml-auto mt-2 mt-lg-0">
+                            <li class="nav-item active">
+                                <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                            </li>
+                            <li class="nav-item">
+                                <a sec:authorize="isAuthenticated()" th:href="@{/logout}" class="nav-link" href="#">Logout</a>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Dropdown
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="#">Action</a>
+                                    <a class="dropdown-item" href="#">Another action</a>
+                                    <div class="dropdown-divider"></div>
+                                    <a class="dropdown-item" href="#">Something else here</a>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </nav>
+                <div class="container">
+                    <!--tombol model-->
+                    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
+                        <button onclick="getData('', '', '')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                            Add Employee Role
+                        </button>
+                        <!--tombol model-->
+
+                        <!--modal-->
+                        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Employee</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="#" th:action="@{/inputEmployeeRole}" th:object="${employeeRole}" method="POST">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label>ID</label>
+                                                    <input class="form-control" type="text" th:field="*{id}" th:readonly="${isUpdate}" id="id" name="id"/>
+                                                    <label th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Employee</label>
+                                                    <select class="form-control" th:field="*{employee}" id="employee" name="employee"/>
+                                                    <option value="">-Pilih-</option>
+                                                    <option th:each="empl : ${employees}" th:value="${empl.id}" th:text="${empl.firstName} + ' ' + ${empl.lastName}"></option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}">First Name Error</label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Role</label>
+                                                    <select class="form-control" th:field="*{role}" id="role" name="role"/>
+                                                    <option value="">-Pilih-</option>
+                                                    <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.id} + ' ' + ${r.name}"></option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</label>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <button class="btn btn-success" type="submit">Save</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--modal-->
+                </div>
+
+                <div class="container">
+                    <div class="card">
+                        <div class="card-body">
+                            <table id="asd" class="table table-hover table-sm table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Employee ID</th>
+                                        <th>Empoyee Name</th>
+                                        <th>Role</th>
+                                        <th>Edit</th>
+                                        <th>Hapus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="as : ${employeeRoles}">
+                                        <td></td>
+                                        <td th:text="${as.employee.id}"></td>
+                                        <td th:text="${as.employee.firstName} + ' ' +${as.employee.lastName}"></td>
+                                        <td th:text="${as.role.name}"></td>
+                                        <td><a th:idE="${as.id}" th:employeeE="${as.employee.id}" th:roleE="${as.role.id}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('employeeE'), this.getAttribute('roleE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editEmployee(employee = ${as.id})}">Edit</a></td>
+                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /#page-content-wrapper -->
+
+    </div>
+    <!-- /#wrapper -->
+    <footer class="page-footer font-small blue">
+        <div class="footer-copyright text-center py-3">© 2018 Copyright:
+            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+        </div>
+    </footer>
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+    <script src="../js/test.js"></script>
+    <script>
+
+    </script>
+
+    <script>
+        $("#menu-toggle").click(function (e) {
+            e.preventDefault();
+            $("#wrapper").toggleClass("toggled");
+        });
+    </script>
+
+    <script th:inline="javascript">
+        function getData(id, employee, role) {
+            document.getElementById("id").value = id;
+            document.getElementById("employee").value = employee;
+            document.getElementById("role").value = role;
+            console.log(regionid);
+            if (id !== '') {
+                document.getElementById("id").readOnly = true;
+            } else {
+                document.getElementById("id").readOnly = false;
+            }
+        }
+    </script>
+
+    <script>
+        $('#myModal').on('shown.bs.modal', function () {
+            $('#myInput').trigger('focus')
+        })
+    </script>
+
+    <script>
+        function setAlertDelete(id) {
+            swal({
+                title: "Apakah Anda Yakin?",
+                text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true
+            }).then((willDelete) => {
+                if (willDelete) {
+                    window.location.href = "/deleteEmployeeRole?id=" + id;
+                } else {
+                    swal("Anda Membatalkan Mengahpus Data!");
+                }
+            });
+        }
+    </script>
+    <script>
+        function setAlertSave(status) {
+            if (status == null) {
+
+            } else if (status.includes("Berhasil")) {
+                swal({
+                    icon: 'success',
+                    type: 'success',
+                    title: 'Good Job',
+                    text: status,
+                });
+
+            } else if (status.includes("Gagal")) {
+                swal({
+                    icon: 'error',
+                    type: 'error',
+                    title: 'Oops...!',
+                    text: status,
+                });
+            }
+//                alert(status);
+        }
+    </script>
+
+</body>
+</html>

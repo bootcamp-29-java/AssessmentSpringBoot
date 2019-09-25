@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <form method="POST" th:action="@{/addlessons}">
+            Class ID : <input type="text" name="classId" id="classId">
+            <br>
+            Class Name : <input type="text" name="class" id="class">
+            <br>
+            Lesson : 
+            <br>
+            <div th:each="as : ${lessons}" >
+                <input type="checkbox" name="lessons" th:value="${as.id}" th:text="${as.name}">
+                <input type="hidden" name="ids" th:value="${as.id}">
+                <input type="text" name="percentages">
+            </div>
+            <input type="submit" value="Submit">
+        </form>
+        <br>
+    </body>
+</html>
