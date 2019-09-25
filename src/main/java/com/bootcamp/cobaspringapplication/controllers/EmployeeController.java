@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -52,19 +53,22 @@ public class EmployeeController {
         model.addAttribute("employees", service.getAll());
         return "/adminpage/EmployeeView";
     }
-
+    
     @PostMapping("/inputEmployee")
     public String inputEmployee(@Valid Employee employee, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("status", "Data Gagal Disimpan");
-            System.out.println(employee.getIsDelete());
-            System.out.println(employee.getBirthDate());
-            System.out.println(employee.getBirthPlace());
-            System.out.println(employee.getEmail());
-            System.out.println(employee.getFirstName());
-            System.out.println(employee.getLastName());
-            System.out.println(employee.getGender());
-            System.out.println(employee.getNationality());
+//            System.out.println(employee.getIsDelete());
+//            System.out.println(employee.getBirthDate());
+//            System.out.println(employee.getBirthPlace());
+//            System.out.println(employee.getEmail());
+//            System.out.println(employee.getFirstName());
+//            System.out.println(employee.getLastName());
+//            System.out.println(employee.getGender());
+//            System.out.println(employee.getNationality());
+//            for (ObjectError allError : result.getAllErrors()) {
+//                System.out.println(allError.toString());
+//            }
         } else {
             redirectAttributes.addFlashAttribute("status", "Data Berhasil Disimpan");
             employee.setPhoto("");

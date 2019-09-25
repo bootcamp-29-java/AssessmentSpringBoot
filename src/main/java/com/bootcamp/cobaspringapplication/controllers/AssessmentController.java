@@ -7,13 +7,11 @@ package com.bootcamp.cobaspringapplication.controllers;
 
 import com.bootcamp.cobaspringapplication.entities.Assessment;
 import com.bootcamp.cobaspringapplication.entities.AssessmentDetail;
-import com.bootcamp.cobaspringapplication.entities.Batch;
 import com.bootcamp.cobaspringapplication.entities.BatchClass;
-import com.bootcamp.cobaspringapplication.entities.Employee;
-import com.bootcamp.cobaspringapplication.entities.EmployeeRole;
 import com.bootcamp.cobaspringapplication.entities.LessonCriteria;
 import com.bootcamp.cobaspringapplication.entities.Participant;
 import com.bootcamp.cobaspringapplication.entities.Sylabus;
+import com.bootcamp.cobaspringapplication.repositories.EmployeeRepository;
 import com.bootcamp.cobaspringapplication.services.IAssessmentDetailService;
 import com.bootcamp.cobaspringapplication.services.IAssessmentService;
 import com.bootcamp.cobaspringapplication.services.IBatchClassService;
@@ -26,28 +24,12 @@ import com.bootcamp.cobaspringapplication.services.IEmployeeRoleService;
 import com.bootcamp.cobaspringapplication.services.IEmployeeService;
 import com.bootcamp.cobaspringapplication.services.ILessonCriteriaService;
 import com.bootcamp.cobaspringapplication.services.ILessonService;
-import com.bootcamp.cobaspringapplication.services.IProductService;
-import com.bootcamp.cobaspringapplication.services.impl.ProductService;
-import java.io.InputStream;
-import java.sql.Connection;
-import java.sql.DriverManager;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import javax.servlet.http.HttpServletResponse;
-import net.sf.jasperreports.engine.DefaultJasperReportsContext;
-import net.sf.jasperreports.engine.JRDataSource;
-import net.sf.jasperreports.engine.JasperCompileManager;
-import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
-import net.sf.jasperreports.engine.export.HtmlExporter;
-import net.sf.jasperreports.export.SimpleExporterInput;
-import net.sf.jasperreports.export.SimpleHtmlExporterOutput;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -87,6 +69,8 @@ public class AssessmentController {
     IAssessmentService ias;
     @Autowired
     IAssessmentDetailService iads;
+    @Autowired
+    EmployeeRepository er;
 
     @RequestMapping("/adminpage/adminhome")
     public String home() {
@@ -100,13 +84,31 @@ public class AssessmentController {
 
     @GetMapping("/trainerpage/inputnilai")
     public String inputNilai(Model model) {
-        model.addAttribute("batchClasses", ibcs.getAll());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String trainerId = er.getByEmail(user.getUsername()).getId();
+        List<BatchClass> batchClasses = new ArrayList<>();
+        for (BatchClass bc : ibcs.getAll()) {
+            if (bc.getTrainer().getId().equals(trainerId)) {
+                batchClasses.add(bc);
+            }
+        }
+        model.addAttribute("batchClasses", batchClasses);
         return "/trainerpage/inputnilai";
     }
 
     @GetMapping("/trainerpage/participantbybatchclass")
     public String participantByBatchClass(Model model) {
-        model.addAttribute("batchClasses", ibcs.getAll());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        User user = (User) auth.getPrincipal();
+        String trainerId = er.getByEmail(user.getUsername()).getId();
+        List<BatchClass> batchClasses = new ArrayList<>();
+        for (BatchClass bc : ibcs.getAll()) {
+            if (bc.getTrainer().getId().equals(trainerId)) {
+                batchClasses.add(bc);
+            }
+        }
+        model.addAttribute("batchClasses", batchClasses);
         return "/trainerpage/participantbybatchclass";
     }
 

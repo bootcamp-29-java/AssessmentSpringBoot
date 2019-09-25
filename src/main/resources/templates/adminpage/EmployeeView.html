@@ -181,7 +181,7 @@ and open the template in the editor.
                                                 </select>
                                                 <label th:if="${#fields.hasErrors('nationality')}" th:errors="*{nationality}">Nationality Error</label>
                                             </div>
-                                            <input class="form-control" type="number" th:field="*{isDelete}" id="isDelete" name="isDelete" value=false hidden/>
+                                            <input class="form-control" type="text" th:field="*{isDelete}" id="isDelete" name="isDelete" value="false" hidden/>
                                             <div class="form-group col-md-12">
                                                 <label>Email</label>
                                                 <input class="form-control" type="text" th:field="*{email}" id="email" name="email"/>
