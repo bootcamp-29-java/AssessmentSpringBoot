@@ -53,11 +53,11 @@ public class ReportService implements IReportService {
             byte[] bytes = JasperRunManager.runReportToPdf(jasperReport, parameters,con);
             
             // Export the report to a PDF file
-            JasperExportManager.exportReportToPdfFile(jasperPrint, path + "reportAssessment.pdf");
+            JasperExportManager.exportReportToPdfFile(jasperPrint, "E:\\Kerjaan Metrodata Group\\Project 3\\Git Project\\AssessmentSpringBoot\\src\\main\\resources\\static\\reports\\reportAssessment.pdf");
             
             System.out.println("Done");
 
-            return "Report successfully generated @path= " + path;
+            return "ReportView";
         } catch (Exception e) {
             e.printStackTrace();
             return "Error--> check the console log";

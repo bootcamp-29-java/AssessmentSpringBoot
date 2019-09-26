@@ -22,7 +22,6 @@ public class JasperReportController {
 
     @GetMapping("/testprint")
     public String generateReport(String id) {
-
         return reportService.generateReport(id);
     }
 }
