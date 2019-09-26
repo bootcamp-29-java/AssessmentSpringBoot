@@ -27,6 +27,8 @@ import com.bootcamp.cobaspringapplication.services.ILessonService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
@@ -71,6 +73,8 @@ public class AssessmentController {
     IAssessmentDetailService iads;
     @Autowired
     EmployeeRepository er;
+    @Autowired
+    JavaMailSender javaMailSender;
 
     @RequestMapping("/adminpage/adminhome")
     public String home() {
@@ -170,7 +174,7 @@ public class AssessmentController {
         model.addAttribute("participants", participants);
         return "content :: participantss";
     }
-    
+
     @GetMapping("/loadscores")
     public String loadScores(Model model, String id, String id2) {
         List<AssessmentDetail> scores = new ArrayList<>();
@@ -182,7 +186,7 @@ public class AssessmentController {
         model.addAttribute("scores", scores);
         return "content :: scoress";
     }
-    
+
     @GetMapping("/loadscore2")
     public String loadScore2(Model model, String id) {
         List<Assessment> assessments = new ArrayList<>();
@@ -197,12 +201,48 @@ public class AssessmentController {
         return "content :: score2";
     }
 
+    @GetMapping("/loadsylabus")
+    public String loadSylabus(Model model, String id) {
+        List<Sylabus> sylabuses = new ArrayList<>();
+        for (Sylabus sylabus : iss.getAll()) {
+            if (sylabus.getClass1().getId().equals(id)) {
+                sylabuses.add(sylabus);
+            }
+        }
+        model.addAttribute("sylabuses", sylabuses);
+        return "content :: sylabuss";
+    }
+
+    @GetMapping("/loadassessment")
+    public String loadAssessment(Model model, String id) {
+        System.out.println(id);
+        List<Assessment> assessments = new ArrayList<>();
+        for (Assessment assessment : ias.getAll()) {
+            if (assessment.getParticipant().getId().equals(id)) {
+                assessments.add(assessment);
+            }
+        }
+        model.addAttribute("assessments", assessments);
+        return "content :: assessmentss";
+    }
+
+    @GetMapping("/loadlc")
+    public String loadLessonCriteria(Model model, String id) {
+        System.out.println(id);
+        List<LessonCriteria> lessonCriterias = new ArrayList<>();
+        for (LessonCriteria lessonCriteria : ilcs.getAll()) {
+            if (lessonCriteria.getSylabus().getClass1().getId().equals(id)) {
+                lessonCriterias.add(lessonCriteria);
+            }
+        }
+        model.addAttribute("lessonCriterias", lessonCriterias);
+        return "content :: lessoncriteriass";
+    }
+
 //    @GetMapping("/testprint")
 //    public String testPrint(Model model, String id){
 //        System.out.println(id);
 //        model.addAttribute("printId", id);
 //        return "report";
 //    }
-    
-    
 }

@@ -178,9 +178,86 @@
                                 </tbody>
                             </table>
                         </div>
+                        <div th:fragment="assessmentss">
+                            <table id="asd" class="table table-hover table-sm table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>ID</th>
+                                        <th>Participant</th>
+                                        <th>Sylabus</th>
+                                        <th>Score</th>
+                                        <th>Edit</th>
+                                        <th>Hapus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="as : ${assessments}">
+                                        <td></td>
+                                        <td th:text="${as.participant.id}"></td>
+                                        <td th:text="${as.participant.employee.firstName} +' ' +${as.participant.employee.lastName}"></td>
+                                        <td th:text="${as.sylabus.lesson.name} +' - ' +${as.sylabus.class1.name}"></td>
+                                        <td th:text="${as.score}"></td>
+                                        <td><a th:idE="${as.id}" th:participantE="${as.participant.id}" th:sylabusE="${as.sylabus.id}" th:scoreE="${as.score}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('participantE'), this.getAttribute('sylabusE'), this.getAttribute('scoreE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editAssessment(assessment = ${as.id})}">Edit</a></td>
+                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div th:fragment="sylabuss">
+                            <table id="asd" class="table table-hover table-sm table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Lesson</th>
+                                        <th>Class</th>
+                                        <th>Percentage</th>
+                                        <th>Edit</th>
+                                        <th>Hapus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="as : ${sylabuses}">
+                                        <td></td>
+                                        <td th:text="${as.lesson.name} +' (' +${as.lesson.id} +')'"></td>
+                                        <td th:text="${as.class1.name}"></td>
+                                        <td th:text="${as.percentage}"></td>
+                                        <td><a th:idE="${as.id}" th:lessonE="${as.lesson.id}" th:classE="${as.class1.id}" th:percentageE="${as.percentage}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('lessonE'), this.getAttribute('classE'), this.getAttribute('percentageE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editSylabus(sylabus = ${as.id})}">Edit</a></td>
+                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
                         <div th:fragment="scoress">
                             <div th:each="as : ${scores}" th:text="${as.assessment.participant.employee.firstName + ' ' + as.assessment.participant.employee.lastName + ' : ' +as.score}"></div>
 
+                        </div>
+                        <div th:fragment="lessoncriteriass">
+                            <table id="asd" class="table table-hover table-sm table-bordered" >
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Sylabus</th>
+                                        <th>Criteria</th>
+                                        <th>Percentage</th>
+                                        <th>Edit</th>
+                                        <th>Hapus</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr th:each="as : ${lessonCriterias}">
+                                        <td></td>
+                                        <td th:text="${as.sylabus.lesson.name} +' (' +${as.sylabus.class1.name} +')'"></td>
+                                        <td th:text="${as.criteria.name}"></td>
+                                        <td th:text="${as.percentage}"></td>
+                                        <td><a th:idE="${as.id}" th:sylabusE="${as.sylabus.id}" th:criteriaE="${as.criteria.id}" th:percentageE="${as.percentage}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('sylabusE'), this.getAttribute('criteriaE'), this.getAttribute('percentageE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editLessonCriteria(lessonCriteria = ${as.id})}">Edit</a></td>
+                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                         <script src="vendor/jquery/jquery.min.js"></script>
                         <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>

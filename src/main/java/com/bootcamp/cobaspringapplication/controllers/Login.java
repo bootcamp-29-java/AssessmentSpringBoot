@@ -38,7 +38,7 @@ public class Login {
         String email = auth.getName();
         return employeeRoleService.getSession(email);
     }
-
+    
     @RequestMapping("/")
     public String home(Model model, RedirectAttributes redirect) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

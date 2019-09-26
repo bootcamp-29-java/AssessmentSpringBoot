@@ -6,6 +6,7 @@
 package com.bootcamp.cobaspringapplication.controllers;
 
 import com.bootcamp.cobaspringapplication.entities.LessonCriteria;
+import com.bootcamp.cobaspringapplication.services.IClassesService;
 import com.bootcamp.cobaspringapplication.services.ICriteriaService;
 import com.bootcamp.cobaspringapplication.services.ILessonCriteriaService;
 import com.bootcamp.cobaspringapplication.services.ISylabusService;
@@ -32,12 +33,12 @@ public class LessonCriteriaController {
     ISylabusService iss;
     @Autowired
     ICriteriaService ics;
+    @Autowired
+    IClassesService ics2;
     
     @RequestMapping("/adminpage/LessonCriteriaView")
     public String showDetail(LessonCriteria lessonCriteria, Model model) {
-        model.addAttribute("lessonCriterias", ilcs.getAll());
-        model.addAttribute("sylabuses", iss.getAll());
-        model.addAttribute("criterias", ics.getAll());
+        model.addAttribute("classes", ics2.getAll());
         return "/adminpage/LessonCriteriaView";
     }
     

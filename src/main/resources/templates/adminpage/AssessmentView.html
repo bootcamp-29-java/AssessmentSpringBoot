@@ -118,6 +118,7 @@ and open the template in the editor.
                     </ul>
                     <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
                     <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
+                    <a href="/adminpage/AssessmentDetailView2" class="list-group-item list-group-item-action bg-light">View Assessment Detail</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -217,31 +218,38 @@ and open the template in the editor.
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <table id="asd" class="table table-hover table-sm table-bordered" >
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>ID</th>
-                                        <th>Participant</th>
-                                        <th>Sylabus</th>
-                                        <th>Score</th>
-                                        <th>Edit</th>
-                                        <th>Hapus</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="as : ${assessments}">
-                                        <td></td>
-                                        <td th:text="${as.participant.id}"></td>
-                                        <td th:text="${as.participant.employee.firstName} +' ' +${as.participant.employee.lastName}"></td>
-                                        <td th:text="${as.sylabus.lesson.name} +' - ' +${as.sylabus.class1.name}"></td>
-                                        <td th:text="${as.score}"></td>
-                                        <td><a th:idE="${as.id}" th:participantE="${as.participant.id}" th:sylabusE="${as.sylabus.id}" th:scoreE="${as.score}"
-                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('participantE'), this.getAttribute('sylabusE'), this.getAttribute('scoreE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editAssessment(assessment = ${as.id})}">Edit</a></td>
-                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="form-group col-md-2">
+                                <select name="participant2" id="participant2" class="form-control">
+                                    <option th:each="as : ${participants}" th:value="${as.id}" th:text="${as.employee.firstName + ' ' + as.employee.lastName}"></option>
+                                </select> 
+                            </div>
+                            <div id="assessmentss">
+                                Content goes here
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                            <!-- JQury from Google CDN -->
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+                            <script>
+                            $(document).ready(function () {
+
+                                //call function when page is loaded
+                                getForm();
+
+                                //set on change listener
+                                $('#participant2').change(getForm);
+
+                                function getForm() {
+
+                                    //create url to request fragment
+                                    var url1 = '/loadassessment?id=' + $('#participant2').val();
+
+                                    //load fragment and replace content
+                                    $('#assessmentss').load(url1);
+                                }
+                            })
+                            </script>
+                            
                         </div>
                     </div>
                 </div>

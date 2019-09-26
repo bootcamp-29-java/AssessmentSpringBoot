@@ -79,6 +79,11 @@ public class AssessmentDetailViewController {
         model.addAttribute("sylabuses", iss.getAll());
         return "/adminpage/AssessmentView";
     }
+    @RequestMapping("/adminpage/AssessmentDetailView2")
+    public String showAssessmentDetailView2(Assessment assessment, Model model) {
+        model.addAttribute("participants", ips.getAll());
+        return "/adminpage/AssessmentDetailView2";
+    }
     
     @GetMapping("/deleteAssessment")
     public String deleteAssessmentAdmin(String id, RedirectAttributes redirectAttributes) {

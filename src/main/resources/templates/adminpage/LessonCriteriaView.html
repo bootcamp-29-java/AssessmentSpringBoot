@@ -118,6 +118,7 @@ and open the template in the editor.
                     </ul>
                     <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
                     <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
+                    <a href="/adminpage/AssessmentDetailView2" class="list-group-item list-group-item-action bg-light">View Assessment Detail</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -217,29 +218,37 @@ and open the template in the editor.
                 <div class="container">
                     <div class="card">
                         <div class="card-body">
-                            <table id="asd" class="table table-hover table-sm table-bordered" >
-                                <thead class="thead-dark">
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Sylabus</th>
-                                        <th>Criteria</th>
-                                        <th>Percentage</th>
-                                        <th>Edit</th>
-                                        <th>Hapus</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr th:each="as : ${lessonCriterias}">
-                                        <td></td>
-                                        <td th:text="${as.sylabus.lesson.name} +' (' +${as.sylabus.class1.name} +')'"></td>
-                                        <td th:text="${as.criteria.name}"></td>
-                                        <td th:text="${as.percentage}"></td>
-                                        <td><a th:idE="${as.id}" th:sylabusE="${as.sylabus.id}" th:criteriaE="${as.criteria.id}" th:percentageE="${as.percentage}"
-                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('sylabusE'), this.getAttribute('criteriaE'), this.getAttribute('percentageE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editLessonCriteria(lessonCriteria = ${as.id})}">Edit</a></td>
-                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+                            <div class="form-group col-md-2">
+                                <select name="class" id="class" class="form-control">
+                                    <option th:each="as : ${classes}" th:value="${as.id}" th:text="${as.name}"></option>
+                                </select> 
+                            </div>
+                            <div id="lessoncriteriass">
+                                Content goes here
+                            </div>
+                            <input type="submit" value="Submit" class="btn btn-primary">
+                            <!-- JQury from Google CDN -->
+                            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+                            <script>
+                            $(document).ready(function () {
+
+                                //call function when page is loaded
+                                getForm();
+
+                                //set on change listener
+                                $('#class').change(getForm);
+
+                                function getForm() {
+
+                                    //create url to request fragment
+                                    var url1 = '/loadlc?id=' + $('#class').val();
+
+                                    //load fragment and replace content
+                                    $('#lessoncriteriass').load(url1);
+                                }
+                            })
+                            </script>
                         </div>
                     </div>
                 </div>
