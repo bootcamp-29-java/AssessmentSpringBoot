@@ -5,6 +5,7 @@
  */
 package com.bootcamp.cobaspringapplication.controllers;
 
+import com.bootcamp.cobaspringapplication.services.IEmployeeService;
 import com.bootcamp.cobaspringapplication.services.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,21 +23,23 @@ public class JasperReportController {
     @Autowired
     private IReportService reportService;
     @Autowired
+    private IEmployeeService ies;
+    @Autowired
     private JavaMailSender javaMailSender;
 
     @GetMapping("/testprint")
     public String generateReport(String id) {
-        sendEmail();
+        sendEmail(ies.getById(id).getEmail(), ies.getById(id).getParticipant().getGrade(), ies.getById(id).getFirstName());
         return reportService.generateReport(id);
     }
     
-    void sendEmail() {
+    void sendEmail(String email, String grade, String firstName) {
 
         SimpleMailMessage msg = new SimpleMailMessage();
-        msg.setTo("yosuak24@gmail.com");
+        msg.setTo(email);
 
-        msg.setSubject("Testing from Spring Boot");
-        msg.setText("Hello World \n Spring Boot Email");
+        msg.setSubject("Hei, " + firstName + "! Nilai kamu sudah keluar!");
+        msg.setText("Selamat! Grade kamu adalah " + grade);
 
         javaMailSender.send(msg);
 
