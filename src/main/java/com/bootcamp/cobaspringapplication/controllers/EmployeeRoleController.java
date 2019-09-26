@@ -37,7 +37,7 @@ public class EmployeeRoleController {
     
     @RequestMapping("/adminpage/employeeRole")
     public String showForm(EmployeeRole employeeRole, Employee employee, Role role, Model model) {
-//    public String showForm(EmployeeLanguage employeeLanguage, Model model){
+//    public String showForm(EmployeeRole employeeRole, Model model){
         model.addAttribute("employeeRoles", iers.getAll());
         model.addAttribute("employees", ies.getAll());
         model.addAttribute("roles", irs.getAll());
@@ -45,7 +45,7 @@ public class EmployeeRoleController {
     }
 
     @GetMapping("/deleteEmployeeRole")
-    public String deleteEmployeeLanguage(String id, RedirectAttributes redirectAttributes) {
+    public String deleteEmployeeRole(String id, RedirectAttributes redirectAttributes) {
         try {
             iers.delete(id);
             redirectAttributes.addFlashAttribute("status", "Data Berhasil Dihapus");
@@ -56,8 +56,8 @@ public class EmployeeRoleController {
     }
 
     @GetMapping("/editEmployeeRole")
-    public String updateEmployeeLanguage(EmployeeRole employeeRole, Employee employee, Role role, Model model) {
-//    public String updateEmployeeLanguage(EmployeeLanguage employeeLanguage, Model model){
+    public String updateEmployeeRole(EmployeeRole employeeRole, Model model) {
+//    public String updateEmployeeRole(EmployeeRole employeeRole, Model model){
         model.addAttribute("employeeRoles", iers.getAll());
         model.addAttribute("employees", ies.getAll());
         model.addAttribute("roles", irs.getAll());
@@ -65,7 +65,7 @@ public class EmployeeRoleController {
     }
 
     @PostMapping("/inputEmployeeRole")
-    public String inputEmployeeLanguage(@Valid EmployeeRole employeeRole, BindingResult result, RedirectAttributes redirectAttributes) {
+    public String inputEmployeeRole(@Valid EmployeeRole employeeRole, BindingResult result, RedirectAttributes redirectAttributes) {
         if (result.hasErrors()) {
             redirectAttributes.addFlashAttribute("status", "Data Gagal Disimpan");
         } else {

@@ -13,7 +13,6 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
         <style type="text/css"> 
             body {
                 overflow-x: hidden;
@@ -59,51 +58,12 @@ and open the template in the editor.
                 }
             }
         </style>
-
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body>
-        <!-- Modal -->
-        <div class="modal fade" id="addBatchClass" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form method="POST" th:action="@{/addbatchclass}">
-                            <div class="form-row">
-                                <div class="form-group col-md-12">
-                                    <label>ID :</label>
-                                    <input class="form-control" type="text" id="id" name="id" th:value="${id}">
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>Class : </label>
-                                    <div th:each="as : ${classes}" class="checkbox">
-                                        <label><input name="class2" id="class2" type="checkbox" th:value="${as.id}" th:text="' ' + ${as.name}"></label>
-                                    </div>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <label>Trainer :</label>
-                                    <select name="trainer" id="trainer" class="form-control">
-                                        <option th:each="as : ${trainers}" th:value="${as.id}" th:text="${as.firstName + ' ' + as.lastName}"></option>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-12">
-                                    <input class="btn btn-success" type="submit" value="Submit">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
 
+    <body th:attr="onload='setAlertSave(\''+${status}+'\')'">
         <div class="d-flex" id="wrapper">
 
             <!-- Sidebar -->
@@ -159,89 +119,99 @@ and open the template in the editor.
                         </ul>
                     </div>
                 </nav>
-                <br>
                 <div class="container">
+                    <!--tombol model-->
+                    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
+                        <button onclick="getData('', '', '', '')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                            Add Lesson Criteria
+                        </button>
+                        <!--tombol model-->
 
-                    <diV class="text-center">
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#addBatchClass">Add Batch Class</button>
-                    </diV>
-                    <br>
+                        <!--modal-->
+                        <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Lesson Criteria</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="#" th:action="@{/inputSylabus}" th:object="${sylabus}" method="POST">
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label>ID</label>
+                                                    <input class="form-control" type="text" th:field="*{id}" id="id" name="id"/>
+                                                    <label th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Percentage</label>
+                                                    <input class="form-control" type="text" th:field="*{percentage}" id="percentage" name="percentage"/>
+                                                    <label th:if="${#fields.hasErrors('percentage')}" th:errors="*{percentage}">Percentage Error</label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Lesson</label>
+                                                    <select class="form-control" th:field="*{lesson}" id="lesson" name="lesson">
+                                                        <option value="">-Pilih-</option>
+                                                        <option th:each="s : ${lessons}" th:value="${s.id}" th:text="${s.id} + ' - ' + ${s.name}"></option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('lesson')}" th:errors="*{lesson}">Lesson Error</label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Class</label>
+                                                    <select class="form-control" th:field="*{class1}" id="class1" name="class1"/>
+                                                    <option value="">-Pilih-</option>
+                                                    <option th:each="c : ${classes}" th:value="${c.id}" th:text="${c.id} +' - ' +${c.name}"></option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('class1')}" th:errors="*{class1}">Class Error</label>
+                                                </div>
+                                            </div>
+                                    </div>
+                                    <button class="btn btn-success" type="submit">Save</button>
+                                    </form>
+                                </div>
+                                <div class="modal-footer">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--modal-->
+                </div>
 
+                <div class="container">
                     <div class="card">
                         <div class="card-body">
                             <table id="asd" class="table table-hover table-sm table-bordered" >
                                 <thead class="thead-dark">
                                     <tr>
-                                        <th>No.</th>
-                                        <th>ID</th>
-                                        <th>Batch</th>
+                                        <th>No</th>
+                                        <th>Lesson</th>
                                         <th>Class</th>
-                                        <th>Trainer</th>
-                                        <th>Action</th>
+                                        <th>Percentage</th>
+                                        <th>Edit</th>
+                                        <th>Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:index=1 th:each="as : ${batchClasses}">
+                                    <tr th:each="as : ${sylabuses}">
                                         <td></td>
-                                        <td th:text="${as.id}"></td>
-                                        <td th:text="${as.batch.id}"></td>
+                                        <td th:text="${as.lesson.name} +' (' +${as.lesson.id} +')'"></td>
                                         <td th:text="${as.class1.name}"></td>
-                                        <td th:text="${as.trainer.firstName + ' ' + as.trainer.lastName}"></td>
-                                        <td></td>
+                                        <td th:text="${as.percentage}"></td>
+                                        <td><a th:idE="${as.id}" th:lessonE="${as.lesson.id}" th:classE="${as.class1.id}" th:percentageE="${as.percentage}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('lessonE'), this.getAttribute('classE'), this.getAttribute('percentageE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editSylabus(sylabus = ${as.id})}">Edit</a></td>
+                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <!-- /#page-content-wrapper -->
-                    <!-- Footer -->
-                    <footer class="page-footer font-small cyan darken-3">
-
-                        <!-- Footer Elements -->
-                        <div class="container">
-
-                            <!-- Grid row-->
-                            <div class="row">
-
-                                <!-- Grid column -->
-                                <div class="col-md-12 py-5">
-                                    <div class="mb-5 flex-center">
-
-                                        <!-- Facebook -->
-                                        <a class="fb-ic">
-                                            <i class="fab fa-facebook-f fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!-- Twitter -->
-                                        <a class="tw-ic">
-                                            <i class="fab fa-twitter fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!-- Google +-->
-                                        <a class="gplus-ic">
-                                            <i class="fab fa-google-plus-g fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!--Linkedin -->
-                                        <a class="li-ic">
-                                            <i class="fab fa-linkedin-in fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!--Instagram-->
-                                        <a class="ins-ic">
-                                            <i class="fab fa-instagram fa-lg white-text mr-md-5 mr-3 fa-2x"> </i>
-                                        </a>
-                                        <!--Pinterest-->
-                                        <a class="pin-ic">
-                                            <i class="fab fa-pinterest fa-lg white-text fa-2x"> </i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <!-- Grid column -->
-
-                            </div>
-                            <!-- Grid row-->
-                        </div>
                 </div>
             </div>
-
         </div>
+        <!-- /#page-content-wrapper -->
+        <!-- /#wrapper -->
         <footer class="page-footer font-small blue">
             <div class="footer-copyright text-center py-3">© 2018 Copyright:
                 <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
@@ -252,16 +222,77 @@ and open the template in the editor.
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <script src="../js/test.js"></script>
+        <script>
 
-        <!--Sweet Alert-->
+        </script>
+
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+
         <script th:inline="javascript">
-            var msg = [[${message}]]
-            if (msg == "Data Berhasil Disimpan" || msg == "Data Berhasil Dihapus") {
-                swal("Sukses!", msg, "success");
-            } else if (msg == "Data Gagal Disimpan" || msg == "Data Gagal Dihapus") {
-                swal("Oops!", msg, "error");
+            function getData(id, lesson, class1, percentage) {
+                document.getElementById("id").value = id;
+                document.getElementById("lesson").value = lesson;
+                document.getElementById("class1").value = class1;
+                document.getElementById("percentage").value = percentage;
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
             }
         </script>
-        <!--End Swee Alert-->
+
+        <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        </script>
+
+        <script>
+            function setAlertDelete(id) {
+                swal({
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/deleteSylabus?id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
+                });
+            }
+        </script>
+        <script>
+            function setAlertSave(status) {
+                if (status == null) {
+
+                } else if (status.includes("Berhasil")) {
+                    swal({
+                        icon: 'success',
+                        type: 'success',
+                        title: 'Good Job',
+                        text: status,
+                    });
+
+                } else if (status.includes("Gagal")) {
+                    swal({
+                        icon: 'error',
+                        type: 'error',
+                        title: 'Oops...!',
+                        text: status,
+                    });
+                }
+                //                alert(status);
+            }
+        </script>
+
     </body>
 </html>

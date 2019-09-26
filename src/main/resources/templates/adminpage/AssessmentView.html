@@ -122,8 +122,8 @@ and open the template in the editor.
                 <div class="container">
                     <!--tombol model-->
                     <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto">
-                        <button onclick="getData('', '', '')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
-                            Add Employee Role
+                        <button onclick="getData('', '', '', '')" type="button" class="btn btn-primary" data-toggle="modal" data-target="#addEmployee">
+                            Add Assessment
                         </button>
                         <!--tombol model-->
 
@@ -132,34 +132,39 @@ and open the template in the editor.
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Employee</h5>
+                                        <h5 class="modal-title" id="exampleModalLabel">Lesson Criteria</h5>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <form action="#" th:action="@{/inputEmployeeRole}" th:object="${employeeRole}" method="POST">
+                                        <form action="#" th:action="@{/inputAssessment}" th:object="${assessment}" method="POST">
                                             <div class="form-row">
                                                 <div class="form-group col-md-12">
                                                     <label>ID</label>
-                                                    <input class="form-control" type="text" th:field="*{id}" th:readonly="${isUpdate}" id="id" name="id"/>
+                                                    <input class="form-control" type="text" th:field="*{id}" id="id" name="id"/>
                                                     <label th:if="${#fields.hasErrors('id')}" th:errors="*{id}">ID Error</label>
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    <label>Employee</label>
-                                                    <select class="form-control" th:field="*{employee}" id="employee" name="employee"/>
-                                                    <option value="">-Pilih-</option>
-                                                    <option th:each="empl : ${employees}" th:value="${empl.id}" th:text="${empl.firstName} + ' ' + ${empl.lastName}"></option>
-                                                    </select>
-                                                    <label th:if="${#fields.hasErrors('employee')}" th:errors="*{employee}">First Name Error</label>
+                                                    <label>Score</label>
+                                                    <input class="form-control" type="text" th:field="*{score}" id="score" name="score"/>
+                                                    <label th:if="${#fields.hasErrors('score')}" th:errors="*{score}">Score Error</label>
                                                 </div>
                                                 <div class="form-group col-md-12">
-                                                    <label>Role</label>
-                                                    <select class="form-control" th:field="*{role}" id="role" name="role"/>
-                                                    <option value="">-Pilih-</option>
-                                                    <option th:each="r : ${roles}" th:value="${r.id}" th:text="${r.id} + ' ' + ${r.name}"></option>
+                                                    <label>Participant</label>
+                                                    <select class="form-control" th:field="*{participant}" id="participant" name="participant">
+                                                        <option value="">-Pilih-</option>
+                                                        <option th:each="s : ${participants}" th:value="${s.id}" th:text="${s.id} + ' - ' + ${s.employee.firstName} +' ' +${s.employee.lastName}"></option>
                                                     </select>
-                                                    <label th:if="${#fields.hasErrors('role')}" th:errors="*{role}">Role Error</label>
+                                                    <label th:if="${#fields.hasErrors('participant')}" th:errors="*{participant}">Participant Error</label>
+                                                </div>
+                                                <div class="form-group col-md-12">
+                                                    <label>Sylabus</label>
+                                                    <select class="form-control" th:field="*{sylabus}" id="sylabus" name="sylabus"/>
+                                                    <option value="">-Pilih-</option>
+                                                    <option th:each="c : ${sylabuses}" th:value="${c.id}" th:text="${c.lesson.name} +' - (' +${c.class1.name} +')'"></option>
+                                                    </select>
+                                                    <label th:if="${#fields.hasErrors('sylabus')}" th:errors="*{sylabus}">Sylabus Error</label>
                                                 </div>
                                             </div>
                                     </div>
@@ -181,21 +186,23 @@ and open the template in the editor.
                                 <thead class="thead-dark">
                                     <tr>
                                         <th>No</th>
-                                        <th>Employee ID</th>
-                                        <th>Empoyee Name</th>
-                                        <th>Role</th>
+                                        <th>ID</th>
+                                        <th>Participant</th>
+                                        <th>Sylabus</th>
+                                        <th>Score</th>
                                         <th>Edit</th>
                                         <th>Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr th:each="as : ${employeeRoles}">
+                                    <tr th:each="as : ${assessments}">
                                         <td></td>
-                                        <td th:text="${as.employee.id}"></td>
-                                        <td th:text="${as.employee.firstName} + ' ' +${as.employee.lastName}"></td>
-                                        <td th:text="${as.role.name}"></td>
-                                        <td><a th:idE="${as.id}" th:employeeE="${as.employee.id}" th:roleE="${as.role.id}"
-                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('employeeE'), this.getAttribute('roleE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editEmployeeRole(employeeRole = ${as.id})}">Edit</a></td>
+                                        <td th:text="${as.participant.id}"></td>
+                                        <td th:text="${as.participant.employee.firstName} +' ' +${as.participant.employee.lastName}"></td>
+                                        <td th:text="${as.sylabus.lesson.name} +' - ' +${as.sylabus.class1.name}"></td>
+                                        <td th:text="${as.score}"></td>
+                                        <td><a th:idE="${as.id}" th:participantE="${as.participant.id}" th:sylabusE="${as.sylabus.id}" th:scoreE="${as.score}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('participantE'), this.getAttribute('sylabusE'), this.getAttribute('scoreE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editAssessment(assessment = ${as.id})}">Edit</a></td>
                                         <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
                                     </tr>
                                 </tbody>
@@ -206,88 +213,88 @@ and open the template in the editor.
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-    <!-- /#wrapper -->
-    <footer class="page-footer font-small blue">
-        <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
-        </div>
-    </footer>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../js/test.js"></script>
-    <script>
+        <!-- /#wrapper -->
+        <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+            </div>
+        </footer>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../js/test.js"></script>
+        <script>
 
-    </script>
+        </script>
 
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-
-    <script th:inline="javascript">
-        function getData(id, employee, role) {
-            document.getElementById("id").value = id;
-            document.getElementById("employee").value = employee;
-            document.getElementById("role").value = role;
-            console.log(regionid);
-            if (id !== '') {
-                document.getElementById("id").readOnly = true;
-            } else {
-                document.getElementById("id").readOnly = false;
-            }
-        }
-    </script>
-
-    <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    </script>
-
-    <script>
-        function setAlertDelete(id) {
-            swal({
-                title: "Apakah Anda Yakin?",
-                text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true
-            }).then((willDelete) => {
-                if (willDelete) {
-                    window.location.href = "/deleteEmployeeRole?id=" + id;
-                } else {
-                    swal("Anda Membatalkan Mengahpus Data!");
-                }
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
             });
-        }
-    </script>
-    <script>
-        function setAlertSave(status) {
-            if (status == null) {
+        </script>
 
-            } else if (status.includes("Berhasil")) {
-                swal({
-                    icon: 'success',
-                    type: 'success',
-                    title: 'Good Job',
-                    text: status,
-                });
+        <script th:inline="javascript">
+            function getData(id, participant, sylabus, score) {
+                document.getElementById("id").value = id;
+                document.getElementById("participant").value = participant;
+                document.getElementById("sylabus").value = sylabus;
+                document.getElementById("score").value = score;
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+        </script>
 
-            } else if (status.includes("Gagal")) {
+        <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        </script>
+
+        <script>
+            function setAlertDelete(id) {
                 swal({
-                    icon: 'error',
-                    type: 'error',
-                    title: 'Oops...!',
-                    text: status,
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/deleteAssessment?id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
                 });
             }
-//                alert(status);
-        }
-    </script>
+        </script>
+        <script>
+            function setAlertSave(status) {
+                if (status == null) {
 
-</body>
+                } else if (status.includes("Berhasil")) {
+                    swal({
+                        icon: 'success',
+                        type: 'success',
+                        title: 'Good Job',
+                        text: status,
+                    });
+
+                } else if (status.includes("Gagal")) {
+                    swal({
+                        icon: 'error',
+                        type: 'error',
+                        title: 'Oops...!',
+                        text: status,
+                    });
+                }
+                //                alert(status);
+            }
+        </script>
+
+    </body>
 </html>
