@@ -197,44 +197,12 @@ public class AssessmentController {
         return "content :: score2";
     }
 
-    @GetMapping("/testprint")
-    public String testPrint(Model model, String id){
-        System.out.println(id);
-        model.addAttribute("printId", id);
-        return "report";
-    }
-    
-//    @Autowired
-//    IProductService productService;
-//
 //    @GetMapping("/testprint")
-//    public String testPrint(Model model, String id, HttpServletResponse response) throws Exception {
-//        Class.forName("com.mysql.jdbc.Driver");
-//        Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/db_assessment", "root", "");
-//        response.setContentType("text/html");
-//        Map<String, Object> item = new HashMap<String, Object>();
-//        item.put("id", id);
-//        InputStream inputStream = this.getClass().getResourceAsStream("/reports/reportAssessment.jasper");
-//        JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-//        JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, item, con);
-//        HtmlExporter exporter = new HtmlExporter(DefaultJasperReportsContext.getInstance());
-//        exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-//        exporter.setExporterOutput(new SimpleHtmlExporterOutput(response.getWriter()));
-//        exporter.exportReport();
+//    public String testPrint(Model model, String id){
+//        System.out.println(id);
+//        model.addAttribute("printId", id);
 //        return "report";
 //    }
-
-//    jasper report
-//    @RequestMapping(value = "report", method = RequestMethod.GET)
-//	public void report(HttpServletResponse response) throws Exception {
-//		response.setContentType("text/html");
-//		JRBeanCollectionDataSource dataSource = new JRBeanCollectionDataSource(ProductService);
-//		InputStream inputStream = this.getClass().getResourceAsStream("/reports/reportAssessment.jrxml");
-//		JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
-//		JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, null, dataSource);
-//		HtmlExporter exporter = new HtmlExporter(DefaultJasperReportsContext.getInstance());
-//		exporter.setExporterInput(new SimpleExporterInput(jasperPrint));
-//		exporter.setExporterOutput(new SimpleHtmlExporterOutput(response.getWriter()));
-//		exporter.exportReport();
-//	}
+    
+    
 }
