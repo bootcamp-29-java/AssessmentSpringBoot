@@ -5,10 +5,6 @@
  */
 package com.bootcamp.cobaspringapplication.controllers;
 
-import com.bootcamp.cobaspringapplication.entities.Batch;
-import com.bootcamp.cobaspringapplication.entities.BatchClass;
-import com.bootcamp.cobaspringapplication.entities.Employee;
-import com.bootcamp.cobaspringapplication.entities.EmployeeRole;
 import com.bootcamp.cobaspringapplication.entities.Lesson;
 import com.bootcamp.cobaspringapplication.services.IAssessmentDetailService;
 import com.bootcamp.cobaspringapplication.services.IAssessmentService;
@@ -22,8 +18,6 @@ import com.bootcamp.cobaspringapplication.services.ILessonCriteriaService;
 import com.bootcamp.cobaspringapplication.services.ILessonService;
 import com.bootcamp.cobaspringapplication.services.IParticipantService;
 import com.bootcamp.cobaspringapplication.services.ISylabusService;
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,7 +27,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 /**
@@ -84,5 +77,22 @@ public class LessonController {
             redirectAttributes.addFlashAttribute("status", "Data Gagal Disimpan");
         }
         return "redirect:/adminpage/managelesson";
+    }
+    
+    @GetMapping("/deleteLesson")
+    public String deleteLesson(String id, RedirectAttributes redirectAttributes) {
+        try {
+            ils.delete(id);
+            redirectAttributes.addFlashAttribute("status", "Data Berhasil Dihapus");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("status", "Data Gagal Dihapus");
+        }
+        return "redirect:/adminpage/managelesson";
+    }
+
+    @GetMapping("/editLesson")
+    public String updateLesson(Lesson lesson, Model model) {
+        model.addAttribute("lessons", ils.getAll());
+        return "/adminpage/managelesson";
     }
 }

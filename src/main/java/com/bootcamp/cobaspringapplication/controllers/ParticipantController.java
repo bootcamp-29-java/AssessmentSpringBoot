@@ -96,4 +96,21 @@ public class ParticipantController {
         
         return "redirect:/adminpage/manageparticipant";
     }
+    
+    @GetMapping("/deleteParticipant")
+    public String deleteParticipant(String id, RedirectAttributes redirectAttributes) {
+        try {
+            ips.delete(id);
+            redirectAttributes.addFlashAttribute("status", "Data Berhasil Dihapus");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("status", "Data Gagal Dihapus");
+        }
+        return "redirect:/adminpage/managecriteria";
+    }
+
+    @GetMapping("/editParticipant")
+    public String updateParticipant(Participant participant, Model model) {
+        model.addAttribute("participants", ips.getAll());
+        return "/adminpage/managecriteria";
+    }
 }

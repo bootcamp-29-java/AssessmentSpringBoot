@@ -23,6 +23,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -74,6 +75,23 @@ public class CriteriaController {
     @RequestMapping("/adminpage/managecriteria")
     public String manageCriteria(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        model.addAttribute("criterias", ics2.getAll());
+        return "/adminpage/managecriteria";
+    }
+    
+    @GetMapping("/deleteCriteria")
+    public String deleteCriteria(String id, RedirectAttributes redirectAttributes) {
+        try {
+            ics2.delete(id);
+            redirectAttributes.addFlashAttribute("status", "Data Berhasil Dihapus");
+        } catch (Exception e) {
+            redirectAttributes.addFlashAttribute("status", "Data Gagal Dihapus");
+        }
+        return "redirect:/adminpage/managecriteria";
+    }
+
+    @GetMapping("/editCriteria")
+    public String updateCriteria(Criteria criteria, Model model) {
         model.addAttribute("criterias", ics2.getAll());
         return "/adminpage/managecriteria";
     }

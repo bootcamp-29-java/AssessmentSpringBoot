@@ -68,21 +68,56 @@ and open the template in the editor.
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading">Start Bootstrap </div>
+                <div class="sidebar-heading">ASSESSMENT</div>
                 <div class="list-group list-group-flush">
-                    <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
-                    <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
-                    <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">Data Participant</a>
-                    <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
-                    <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
-                    <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">HOME</a>
+                    <a href="#pageClass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Class</a>
+                    <ul class="collapse list-unstyled" id="pageClass">
+                        <li>
+                            <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Batch Class</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Class</a>
+                        </li>
+                    </ul>
+                    <a href="#pageMateri" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Theory</a>
+                    <ul class="collapse list-unstyled" id="pageMateri">
+                        <li>
+                            <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Lesson</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Criteria</a>
+                        </li>
+                    </ul>
+                    <a href="#pagePertcentage" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Percentage</a>
+                    <ul class="collapse list-unstyled" id="pagePertcentage">
+                        <li>
+                            <a href="/adminpage/LessonCriteriaView" class="list-group-item list-group-item-action bg-light">Lesson Criteria</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/SylabusView" class="list-group-item list-group-item-action bg-light">Sylabus</a>
+                        </li>
+                    </ul>
+                    <a href="#pageAssesment" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Assessment</a>
+                    <ul class="collapse list-unstyled" id="pageAssesment">
+                        <li>
+                            <a href="/adminpage/AssessmentView" class="list-group-item list-group-item-action bg-light">Assessment</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/AssessmentDetailView" class="list-group-item list-group-item-action bg-light">Assessment Detail</a>
+                        </li>
+                    </ul>
+                    <a href="#pageParticipant" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Participant</a>
+                    <ul class="collapse list-unstyled" id="pageParticipant">
+                        <li>
+                            <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">List Participant</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                        </li>
+                    </ul>
                     <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
                     <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
-                    <a href="/adminpage/LessonCriteriaView" class="list-group-item list-group-item-action bg-light">Manage Lesson Criteria</a>
-                    <a href="/adminpage/SylabusView" class="list-group-item list-group-item-action bg-light">Manage Sylabus</a>
-                    <a href="/adminpage/AssessmentView" class="list-group-item list-group-item-action bg-light">Manage Assessment</a>
-                    <a href="/adminpage/AssessmentDetailView" class="list-group-item list-group-item-action bg-light">Manage Assessment Detail</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -206,88 +241,81 @@ and open the template in the editor.
             </div>
         </div>
         <!-- /#page-content-wrapper -->
-    <!-- /#wrapper -->
-    <footer class="page-footer font-small blue">
-        <div class="footer-copyright text-center py-3">© 2018 Copyright:
-            <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
-        </div>
-    </footer>
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
-    <script src="../js/test.js"></script>
-    <script>
+        <!-- /#wrapper -->
+        <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-3">© 2018 Copyright:
+                <a href="https://mdbootstrap.com/education/bootstrap/"> MDBootstrap.com</a>
+            </div>
+        </footer>
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
+        <script src="../js/test.js"></script>
+        <script>
 
-    </script>
+        </script>
 
-    <script>
-        $("#menu-toggle").click(function (e) {
-            e.preventDefault();
-            $("#wrapper").toggleClass("toggled");
-        });
-    </script>
-
-    <script th:inline="javascript">
-        function getData(id, employee, role) {
-            document.getElementById("id").value = id;
-            document.getElementById("employee").value = employee;
-            document.getElementById("role").value = role;
-            console.log(regionid);
-            if (id !== '') {
-                document.getElementById("id").readOnly = true;
-            } else {
-                document.getElementById("id").readOnly = false;
-            }
-        }
-    </script>
-
-    <script>
-        $('#myModal').on('shown.bs.modal', function () {
-            $('#myInput').trigger('focus')
-        })
-    </script>
-
-    <script>
-        function setAlertDelete(id) {
-            swal({
-                title: "Apakah Anda Yakin?",
-                text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true
-            }).then((willDelete) => {
-                if (willDelete) {
-                    window.location.href = "/deleteEmployeeRole?id=" + id;
+        <script th:inline="javascript">
+            function getData(id, employee, role) {
+                document.getElementById("id").value = id;
+                document.getElementById("employee").value = employee;
+                document.getElementById("role").value = role;
+                console.log(regionid);
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
                 } else {
-                    swal("Anda Membatalkan Mengahpus Data!");
+                    document.getElementById("id").readOnly = false;
                 }
-            });
-        }
-    </script>
-    <script>
-        function setAlertSave(status) {
-            if (status == null) {
+            }
+        </script>
 
-            } else if (status.includes("Berhasil")) {
-                swal({
-                    icon: 'success',
-                    type: 'success',
-                    title: 'Good Job',
-                    text: status,
-                });
+        <script>
+            $('#myModal').on('shown.bs.modal', function () {
+                $('#myInput').trigger('focus')
+            })
+        </script>
 
-            } else if (status.includes("Gagal")) {
+        <script>
+            function setAlertDelete(id) {
                 swal({
-                    icon: 'error',
-                    type: 'error',
-                    title: 'Oops...!',
-                    text: status,
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/deleteEmployeeRole?id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
                 });
             }
-//                alert(status);
-        }
-    </script>
+        </script>
+        <script>
+            function setAlertSave(status) {
+                if (status == null) {
 
-</body>
+                } else if (status.includes("Berhasil")) {
+                    swal({
+                        icon: 'success',
+                        type: 'success',
+                        title: 'Good Job',
+                        text: status,
+                    });
+
+                } else if (status.includes("Gagal")) {
+                    swal({
+                        icon: 'error',
+                        type: 'error',
+                        title: 'Oops...!',
+                        text: status,
+                    });
+                }
+    //                alert(status);
+            }
+        </script>
+
+    </body>
 </html>

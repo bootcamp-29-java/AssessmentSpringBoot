@@ -91,6 +91,7 @@ and open the template in the editor.
                                 <div class="form-group col-md-12">
                                     <label>Trainer :</label>
                                     <select name="trainer" id="trainer" class="form-control">
+                                        <option value="">-Pilih-</option>
                                         <option th:each="as : ${trainers}" th:value="${as.id}" th:text="${as.firstName + ' ' + as.lastName}"></option>
                                     </select>
                                 </div>
@@ -108,21 +109,56 @@ and open the template in the editor.
 
             <!-- Sidebar -->
             <div class="bg-light border-right" id="sidebar-wrapper">
-                <div class="sidebar-heading">Start Bootstrap </div>
+                <div class="sidebar-heading">ASSESSMENT</div>
                 <div class="list-group list-group-flush">
-                    <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">Dashboard</a>
-                    <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Manage Batch Class</a>
-                    <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
-                    <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">Data Participant</a>
-                    <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Manage Class</a>
-                    <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Manage Lesson</a>
-                    <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Manage Criteria</a>
+                    <a href="/adminpage/adminhome" class="list-group-item list-group-item-action bg-light">HOME</a>
+                    <a href="#pageClass" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Class</a>
+                    <ul class="collapse list-unstyled" id="pageClass">
+                        <li>
+                            <a href="/adminpage/managebatchclass" class="list-group-item list-group-item-action bg-light">Batch Class</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/manageclasses" class="list-group-item list-group-item-action bg-light">Class</a>
+                        </li>
+                    </ul>
+                    <a href="#pageMateri" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Theory</a>
+                    <ul class="collapse list-unstyled" id="pageMateri">
+                        <li>
+                            <a href="/adminpage/managelesson" class="list-group-item list-group-item-action bg-light">Lesson</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/managecriteria" class="list-group-item list-group-item-action bg-light">Criteria</a>
+                        </li>
+                    </ul>
+                    <a href="#pagePertcentage" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Percentage</a>
+                    <ul class="collapse list-unstyled" id="pagePertcentage">
+                        <li>
+                            <a href="/adminpage/LessonCriteriaView" class="list-group-item list-group-item-action bg-light">Lesson Criteria</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/SylabusView" class="list-group-item list-group-item-action bg-light">Sylabus</a>
+                        </li>
+                    </ul>
+                    <a href="#pageAssesment" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Assessment</a>
+                    <ul class="collapse list-unstyled" id="pageAssesment">
+                        <li>
+                            <a href="/adminpage/AssessmentView" class="list-group-item list-group-item-action bg-light">Assessment</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/AssessmentDetailView" class="list-group-item list-group-item-action bg-light">Assessment Detail</a>
+                        </li>
+                    </ul>
+                    <a href="#pageParticipant" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle list-group-item list-group-item-action bg-light">Manage Participant</a>
+                    <ul class="collapse list-unstyled" id="pageParticipant">
+                        <li>
+                            <a href="/adminpage/participantview" class="list-group-item list-group-item-action bg-light">List Participant</a>
+                        </li>
+                        <li>
+                            <a href="/adminpage/manageparticipant" class="list-group-item list-group-item-action bg-light">Add Participant to Class</a>
+                        </li>
+                    </ul>
                     <a href="/adminpage/employee" class="list-group-item list-group-item-action bg-light">Manage Employee</a>
                     <a href="/adminpage/employeeRole" class="list-group-item list-group-item-action bg-light">Manage Employee Role</a>
-                    <a href="/adminpage/LessonCriteriaView" class="list-group-item list-group-item-action bg-light">Manage Lesson Criteria</a>
-                    <a href="/adminpage/SylabusView" class="list-group-item list-group-item-action bg-light">Manage Sylabus</a>
-                    <a href="/adminpage/AssessmentView" class="list-group-item list-group-item-action bg-light">Manage Assessment</a>
-                    <a href="/adminpage/AssessmentDetailView" class="list-group-item list-group-item-action bg-light">Manage Assessment Detail</a>
                 </div>
             </div>
             <!-- /#sidebar-wrapper -->
@@ -177,7 +213,8 @@ and open the template in the editor.
                                         <th>Batch</th>
                                         <th>Class</th>
                                         <th>Trainer</th>
-                                        <th>Action</th>
+                                        <!--<th>Edit</th>-->
+                                        <th>Hapus</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -187,7 +224,9 @@ and open the template in the editor.
                                         <td th:text="${as.batch.id}"></td>
                                         <td th:text="${as.class1.name}"></td>
                                         <td th:text="${as.trainer.firstName + ' ' + as.trainer.lastName}"></td>
-                                        <td></td>
+<!--                                        <td><a th:idE="${as.id}" th:batchE="${as.batch.id}" th:classE="${as.class1.id}" th:trainerE="${as.trainer.id}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('batchE'), this.getAttribute('classE'), this.getAttribute('trainerE'))" data-toggle="modal" data-target="#addBatchClass" class="btn btn-primary" type="button" th:href="@{/editBatchClass(batchClass = ${as.id})}">Edit</a></td>-->
+                                        <td><a class="btn btn-danger" type="button" href="#" th:idDelete="${as.id}" onclick="setAlertDelete(this.getAttribute('idDelete'))">Hapus</a></td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -252,6 +291,38 @@ and open the template in the editor.
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <script src="../js/test.js"></script>
+        
+<!--        <script th:inline="javascript">
+            function getData(id, batch, class2, trainer) {
+                document.getElementById("id").value = id;
+                document.getElementById("batch").value = batch;
+                document.getElementById("class2").value = class2;
+                document.getElementById("trainer").value = trainer;
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+        </script>-->
+        
+        <script>
+            function setAlertDelete(id) {
+                swal({
+                    title: "Apakah Anda Yakin?",
+                    text: "Tekan Ok, Jika Anda Yakin Untuk Menghapus Data!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true
+                }).then((willDelete) => {
+                    if (willDelete) {
+                        window.location.href = "/deleteBatchClass?id=" + id;
+                    } else {
+                        swal("Anda Membatalkan Mengahpus Data!");
+                    }
+                });
+            }
+        </script>
 
         <!--Sweet Alert-->
         <script th:inline="javascript">

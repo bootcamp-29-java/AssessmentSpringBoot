@@ -101,4 +101,10 @@ public class BatchClassController {
         }
         return "redirect:/adminpage/managebatchclass";
     }
+    
+    @GetMapping("/editBatchClass")
+    public String updateBatchClass(BatchClass batchClass, Model model) {
+        model.addAttribute("batchClasses", ibcs.getAll());
+        return "/adminpage/managebatchclass";
+    }
 }
