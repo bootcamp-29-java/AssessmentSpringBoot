@@ -5,13 +5,15 @@
  */
 package com.bootcamp.cobaspringapplication.controllers;
 
+import com.bootcamp.cobaspringapplication.entities.Employee;
 import com.bootcamp.cobaspringapplication.services.IEmployeeService;
 import com.bootcamp.cobaspringapplication.services.IReportService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 
 /**
  *
@@ -27,9 +29,12 @@ public class JasperReportController {
     @Autowired
     private JavaMailSender javaMailSender;
 
-    @GetMapping("/testprint")
-    public String generateReport(String id) {
-        sendEmail(ies.getById(id).getEmail(), ies.getById(id).getParticipant().getGrade(), ies.getById(id).getFirstName());
+    @PostMapping("/testprint")
+    public String generateReport(@ModelAttribute("id") String id, @ModelAttribute("grade") String grade) {
+        Employee employee = ies.getById(id);
+        employee.getParticipant().setGrade(grade);
+        ies.save(employee);
+        sendEmail(employee.getEmail(), employee.getParticipant().getGrade(), employee.getFirstName());
         return reportService.generateReport(id);
     }
     

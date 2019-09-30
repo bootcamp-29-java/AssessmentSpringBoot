@@ -113,7 +113,7 @@
                                     <tr>
                                         <th>Id</th>
                                         <th>Name</th>
-                                        <th>Grade</th>
+                                        <th>Recomended Grade</th>
                                         <th>Score</th>
                                         <th>Action</th>
                                     </tr>
@@ -124,7 +124,9 @@
                                         <td th:text="${as.employee.firstName + ' ' + as.employee.lastName}"></td>
                                         <td th:text="${as.grade}"></td>
                                         <td th:text="${as.score}"></td>
-                                        <td><a th:href="@{/testprint(id=${as.id})}" class="btn btn-success" target="_blank">Print</a></td>
+                                        <td><a th:idE="${as.id}" th:gradeE="${as.grade}" th:scoreE="${as.score}" th:batchClassE="${as.batchClass.id}"
+                                               onclick="getData(this.getAttribute('idE'), this.getAttribute('gradeE'), this.getAttribute('scoreE'), this.getAttribute('batchClassE'))" data-toggle="modal" data-target="#addEmployee" class="btn btn-primary" type="button" th:href="@{/editParticipantTrainer(participant = ${as.id})}">Edit</a></td>
+                                        <!--<td><a th:href="@{/testprint(id=${as.id})}" class="btn btn-success" target="_blank">Print</a></td>-->
                                     </tr>
                                 </tbody>
                             </table>

@@ -102,7 +102,7 @@ public class AssessmentController {
     }
 
     @GetMapping("/trainerpage/participantbybatchclass")
-    public String participantByBatchClass(Model model) {
+    public String participantByBatchClass(Participant participant, Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         User user = (User) auth.getPrincipal();
         String trainerId = er.getByEmail(user.getUsername()).getId();
@@ -165,6 +165,7 @@ public class AssessmentController {
 
     @GetMapping("/loadparticipants")
     public String loadParticipants(Model model, String id) {
+        System.out.println(id);
         List<Participant> participants = new ArrayList<>();
         for (Participant participant : ips.getAll()) {
             if (participant.getBatchClass().getId().equals(id)) {

@@ -111,6 +111,49 @@ and open the template in the editor.
                         </ul>
                     </div>
                 </nav>
+
+                <!--modal-->
+                <div class="modal fade" id="addEmployee" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Employee</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action="#" th:action="@{/testprint}" method="POST">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-12" hidden>
+                                            <label>ID</label>
+                                            <input class="form-control" type="text" id="id" name="id"/>
+                                        </div>
+                                        <div class="form-group col-md-12">
+                                            <label>Grade</label>
+                                            <input class="form-control" type="text" id="grade" name="grade"/>
+                                        </div>
+                                        <div class="form-group col-md-12" hidden>
+                                            <label>Score</label>
+                                            <input class="form-control" type="text" id="score" name="score"/>
+                                        </div>
+                                        <div class="form-group col-md-12" hidden>
+                                            <label>Batch Class</label>
+                                            <select class="form-control" id="batchClass2" name="batchClass2">
+                                                <option th:each="empl : ${batchClasses}" th:value="${empl.id}" th:text="${empl.id}"></option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <button class="btn btn-success" type="submit">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                        </div>
+                    </div>
+                </div>
+                <!--modal-->
+
                 <br>
                 <div class="container">
                     <div class="card"> 
@@ -207,7 +250,26 @@ and open the template in the editor.
         <script src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
         <script src="https://cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js"></script>
         <script src="../js/test.js"></script>
-        
+
+        <script>
+
+        </script>
+
+        <script th:inline="javascript">
+            function getData(id, grade, score, batchClass) {
+                document.getElementById("id").value = id;
+                document.getElementById("grade").value = grade;
+                document.getElementById("score").value = score;
+                document.getElementById("batchClass").value = batchClass;
+                console.log(regionid);
+                if (id !== '') {
+                    document.getElementById("id").readOnly = true;
+                } else {
+                    document.getElementById("id").readOnly = false;
+                }
+            }
+        </script>
+
         <!--Sweet Alert-->
         <script th:inline="javascript">
             var msg = [[${message}]]
